@@ -3,6 +3,7 @@
 > Minecraft 实用客户端 —— 基于 **Meteor Client** 的功能与 **Material You** 界面，已完整汉化。
 
 **作者：** cavanluo666
+**仓库地址：** https://github.com/cavanluo666/Starfall
 **GitHub：** https://github.com/cavanluo666
 **Bilibili：** https://space.bilibili.com/3493095616284680
 **个人网站：** https://246644.xyz

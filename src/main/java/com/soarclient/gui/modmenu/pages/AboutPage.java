@@ -37,6 +37,7 @@ public class AboutPage extends Page {
 
     private static final List<Link> LINKS = List.of(
         new Link("GitHub", "cavanluo666", "https://github.com/cavanluo666"),
+        new Link("仓库", "cavanluo666/Starfall", "https://github.com/cavanluo666/Starfall"),
         new Link("Bilibili", "空间主页", "https://space.bilibili.com/3493095616284680"),
         new Link("个人网站", "246644.xyz", "https://246644.xyz")
     );
@@ -153,16 +154,16 @@ public class AboutPage extends Page {
         y += tableH + 18f;
 
         // ---- 说明 ----
-        Skia.drawText("本项目以 GPL-3.0 开源，源码地址：", x + padX, y,
+        Skia.drawText("本项目以 GPL-3.0 开源，源码与问题反馈见上方「仓库」条目。", x + padX, y,
                 palette.getOnSurfaceVariant(), Fonts.getRegular(13));
-        Skia.drawText("https://github.com/cavanluo666/Starfall", x + padX, y + 18f,
-                palette.getPrimary(), Fonts.getMedium(13));
-        y += 44f;
+        y += 26f;
 
         Skia.drawText("感谢 Meteor Client、SoarClient、Baritone 及上述所有开源项目的作者。",
                 x + padX, y, ColorUtils.applyAlpha(palette.getOnSurfaceVariant(), 0.85f), Fonts.getRegular(12));
 
         contentBottom = y + 30f;
+        // 视口高度统一按内容起点推算：直接传 height 会让滚动范围多算一个 contentTop，
+        // 拖动映射与滑块比例都会偏。
         scrollHelper.setMaxScroll(contentBottom - Layout.contentTop(), height - Layout.contentTop());
 
         Skia.restore();

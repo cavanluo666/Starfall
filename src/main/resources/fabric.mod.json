@@ -8,7 +8,7 @@
     "cavanluo666"
   ],
   "contact": {
-    "homepage": "https://246644.xyz",
+    "homepage": "https://github.com/cavanluo666/Starfall",
     "sources": "https://github.com/cavanluo666/Starfall",
     "issues": "https://github.com/cavanluo666/Starfall/issues"
   },
@@ -39,7 +39,7 @@
     "meteor-client:commit": "${commit}",
     "modmenu": {
       "links": {
-        "modmenu.homepage": "https://246644.xyz",
+        "modmenu.homepage": "https://github.com/cavanluo666/Starfall",
         "modmenu.sources": "https://github.com/cavanluo666/Starfall"
       }
     }
