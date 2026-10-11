@@ -23,6 +23,29 @@ public class Page extends SimplePage {
     /** 内容底部（用于计算滚动范围），由子类在 draw 里设置 */
     protected float contentBottom = 0f;
 
+    /** 分类栏实测高度（面板坐标系），由带分类栏的子类在 draw 里写入 */
+    protected float categoryBarHeight = 0f;
+
+    /** 搜索栏在屏幕上的顶部 Y（供子类对齐顶栏底卡）。 */
+    protected float searchBarTop() {
+        return y + Layout.searchTop();
+    }
+
+    /** 分类栏在屏幕上的顶部 Y。 */
+    protected float categoryBarTop() {
+        return y + Layout.categoryTop();
+    }
+
+    /**
+     * 内容区在屏幕上的起始 Y。
+     *
+     * <p>由搜索栏 + 分类栏实测高度推导，**滚动条轨道与卡片区都必须用它**，
+     * 否则分类栏换行变高时就会盖住滚动条 / 卡片穿进分类栏。
+     */
+    protected float contentStartY() {
+        return y + Layout.contentTop(categoryBarHeight);
+    }
+
     public Page(SoarGui parent, String title, String icon, GuiTransition transition) {
         super(parent, title, icon, transition);
     }
@@ -37,7 +60,7 @@ public class Page extends SimplePage {
         }
 
         float sw = Layout.searchWidth();
-        searchBar = new SearchBar(x + width - sw - Layout.listPadX(), y + (Layout.contentTop() - 52f), sw, text, () -> {
+        searchBar = new SearchBar(x + width - sw - Layout.listPadX(), searchBarTop(), sw, text, () -> {
             scrollHelper.reset();
         });
     }
@@ -47,10 +70,12 @@ public class Page extends SimplePage {
 
         scrollHelper.onUpdate();
 
-        // 滚动条轨道：贴右缘，避开顶部搜索栏
-        float trackH = height - 110f;
+        // 滚动条轨道：与内容区上下对齐，绝不能压到顶部常驻区（搜索栏 / 分类栏）
+        float trackTop = contentStartY();
+        float trackBottom = y + height - Layout.MARGIN_Y;
+        float trackH = trackBottom - trackTop;
         if (trackH < 40f) trackH = Math.max(20f, height - 60f);
-        scrollBar.setBounds(x + width - ScrollBar.WIDTH - ScrollBar.MARGIN, y + 92f,
+        scrollBar.setBounds(x + width - ScrollBar.WIDTH - ScrollBar.MARGIN, trackTop,
                 ScrollBar.WIDTH, trackH);
 
         // 搜索栏常驻：画在未滚动层，不受内容滚动影响
@@ -62,9 +87,15 @@ public class Page extends SimplePage {
         }
     }
 
-    /** 由子类在完成布局后调用，更新滚动范围。 */
+    /**
+     * 由子类在完成布局后调用，更新滚动范围。
+     *
+     * <p>视口高度取「内容区」高度（面板底 - 内容起点），而不是整个面板高度 ——
+     * 否则滚动范围会按整块面板算，滑块比例与拖动映射都会偏。
+     */
     protected void updateScrollRange() {
-        scrollHelper.setMaxScroll(contentBottom, height - 92f);
+        float viewport = (y + height - Layout.MARGIN_Y) - contentStartY();
+        scrollHelper.setMaxScroll(contentBottom - contentStartY(), viewport);
     }
 
     @Override

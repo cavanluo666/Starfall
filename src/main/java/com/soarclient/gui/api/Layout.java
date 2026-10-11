@@ -107,8 +107,60 @@ public final class Layout {
         return Math.min(240f, cw * 0.45f);
     }
 
-    /** 内容起始 Y（搜索栏下方）。 */
+    // ---------------- 顶部常驻区（搜索栏 + 分类栏） ----------------
+    //
+    // 这三个常量必须是「单一来源」：内容起始位置、滚动条轨道起点、顶部底卡高度
+    // 都由它们推导。曾经三处各写各的（searchBar 用 contentTop-52、滚动条轨道写死
+    // y+92、ModsPage 顶栏卡写死 56+分类高度+14），结果是：
+    //   · 分类栏有 7 个标签，中等宽度下换行成 2 行 = 54px 高，占 80..134
+    //   · 滚动条轨道却从 92 开始 -> 与分类栏第二行重叠 42px，拖动条被盖住
+    //   · contentTop=88 又压进分类栏第二行内部，卡片向上穿过分类栏
+    // 现在统一：搜索栏 -> 分类栏 -> 内容区，依次排列且互不重叠。
+
+    /** 顶部常驻区内边距（相对面板上边缘）。 */
+    public static final float TOP_PAD = 10f;
+
+    /**
+     * 搜索栏高度。
+     *
+     * <p>与 {@code SearchBar} 内部高度共用这一个值：这台机器实测面板只有 212px 高，
+     * 分类栏换行后还要 54px，顶栏每多 1px 都是从卡片区里抢的。原先的 42px
+     * 让内容区只剩 88px（不足一张卡片高）。
+     */
+    public static final float SEARCH_H = 34f;
+
+    /** 搜索栏与分类栏之间的间距。 */
+    public static final float TOP_GAP = 4f;
+
+    /** 分类栏与内容区之间的间距。 */
+    public static final float CONTENT_GAP = 8f;
+
+    /** 搜索栏在面板内的 Y 偏移。 */
+    public static float searchTop() {
+        return TOP_PAD;
+    }
+
+    /** 分类栏在面板内的 Y 偏移。 */
+    public static float categoryTop() {
+        return TOP_PAD + SEARCH_H + TOP_GAP;
+    }
+
+    /**
+     * 内容起始 Y（面板内偏移，已含搜索栏 + 分类栏 + 间距）。
+     *
+     * @param categoryHeight 分类栏实测高度（会随标签换行变化），由 CategoryBar.getHeight() 提供
+     */
+    public static float contentTop(float categoryHeight) {
+        return categoryTop() + Math.max(0f, categoryHeight) + CONTENT_GAP;
+    }
+
+    /** 无分类栏的页面（设置 / 关于）使用的内容起始 Y。 */
     public static float contentTop() {
-        return McCompat.scaledHeight() < 340 ? 74f : 88f;
+        return contentTop(0f);
+    }
+
+    /** 顶部常驻区总高（搜索栏 + 间距 + 分类栏），供顶部底卡使用。 */
+    public static float topAreaHeight(float categoryHeight) {
+        return SEARCH_H + TOP_GAP + Math.max(0f, categoryHeight) + CONTENT_GAP;
     }
 }

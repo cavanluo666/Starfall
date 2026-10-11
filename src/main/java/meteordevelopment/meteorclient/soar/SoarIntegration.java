@@ -22,6 +22,8 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
 
+import java.util.List;
+
 /**
  * Meteor 与 Soar 的桥接：
  * - 启动时初始化 Soar 的字体与调色板；
@@ -45,9 +47,32 @@ public final class SoarIntegration {
 
     public static void init() {
         registerBuiltinPacks();
+        logPackState();
         if (Soar.getInstance().isStarted()) return;
         Soar.getInstance().start();
         MeteorClient.EVENT_BUS.subscribe(new SoarIntegration());
+    }
+
+    /**
+     * 打印两个内置资源包的真实加载状态。
+     *
+     * <p>判据取 {@code ResourcePackManager} 的启用集合（即本次会话真正参与加载的包），
+     * 而不是 {@code options.resourcePacks} —— 后者只是意图/显示状态，曾经因为名字写成
+     * {@code namespace/path} 而与实际不符，出现"界面显示已启用、材质没生效"。
+     */
+    private static void logPackState() {
+        try {
+            var rpm = MinecraftClient.getInstance().getResourcePackManager();
+            if (rpm == null) {
+                MeteorClient.LOG.warn("[内置包] ResourcePackManager 为 null，跳过状态检查");
+                return;
+            }
+            MeteorClient.LOG.info("[内置包] 实际加载状态: Xray={} CozyUI={}",
+                    rpm.getEnabledIds().contains(XRAY_PACK_NAME),
+                    rpm.getEnabledIds().contains(COZYUI_PACK_NAME));
+        } catch (Throwable t) {
+            MeteorClient.LOG.warn("[内置包] 状态检查失败: {}", t.toString());
+        }
     }
 
     /** 由 preLaunch 入口调用：在游戏读取 options 之前注册内置资源包。 */
@@ -87,6 +112,35 @@ public final class SoarIntegration {
         } catch (Throwable t) {
             MeteorClient.LOG.warn("[内置包] {} 注册失败: {}", name, t.toString());
         }
+    }
+
+    /**
+     * 内置资源包在 {@code ResourcePackManager} 里的真实 profile 名形式不确定
+     * （Fabric 不同版本用过 {@code namespace:path} / {@code namespace/path}
+     * / {@code builtin/...} 等多种拼法），因此这里生成全部候选名并逐个探测，
+     * 而不是赌某一个写法。
+     *
+     * @param canonical 规范名，格式 {@code namespace:path}
+     * @return 真实存在的 profile 名；都不存在时返回 null
+     */
+    private static String resolvePackName(net.minecraft.resource.ResourcePackManager rpm, String canonical) {
+        for (String c : packNameCandidates(canonical)) {
+            if (rpm.hasProfile(c)) return c;
+        }
+        return null;
+    }
+
+    private static List<String> packNameCandidates(String canonical) {
+        int i = canonical.indexOf(':');
+        String ns = i < 0 ? "" : canonical.substring(0, i);
+        String path = i < 0 ? canonical : canonical.substring(i + 1);
+        return List.of(
+                ns + ":" + path,
+                ns + "/" + path,
+                "builtin/" + ns + "/" + path,
+                "builtin/" + ns + ":" + path,
+                path
+        );
     }
 
     /** 由 Meteor 的渲染钩子每帧调用，保证 Skia 面与窗口尺寸同步。 */
@@ -134,6 +188,26 @@ public final class SoarIntegration {
                 && menuScreen != null
                 && mc.currentScreen.getClass() == menuScreen.getClass();
             if (!alreadyOpen) toggleMenu();
+        }
+
+        // -Dsoar.autoxray=true 时自动启用透视模块，用于验证"模块 → 内置材质包"这条链路
+        if (auTick == 80 && Boolean.getBoolean("soar.autoxray")) {
+            try {
+                var xray = meteordevelopment.meteorclient.systems.modules.Modules.get()
+                        .get(meteordevelopment.meteorclient.systems.modules.render.Xray.class);
+                if (xray != null && !xray.isActive()) {
+                    xray.toggle();
+                    MeteorClient.LOG.info("[SoarDiag] 已切换透视模块，isActive={} 材质包开关={}",
+                            xray.isActive(), xray.isUsingResourcePack());
+                }
+            } catch (Throwable t) {
+                MeteorClient.LOG.warn("[SoarDiag] 切换透视模块失败: {}", t.toString());
+            }
+        }
+
+        // 较晚再打一次状态，确认模块启用的包没有被后续流程重置
+        if (auTick == 200) {
+            logPackState();
         }
 
         // 自动切页：-Dsoar.autopage=mods 时切到"模块"页
@@ -192,7 +266,18 @@ public final class SoarIntegration {
 
     // ---- 内置矿透材质包开关 ----
 
-    private static final String XRAY_PACK_NAME = "meteor-client/xray";
+    /**
+     * 资源包在 {@code ResourcePackManager} 里的 profile 名。
+     *
+     * <p>格式是 {@code namespace:path}（Fabric 的 {@code ModNioResourcePack} 用
+     * {@code Identifier.toString()} 作为 packId），**不是** {@code namespace/path}。
+     * 实测 {@code ResourcePackManager.getIds()} 里就是 {@code meteor-client:xray}。
+     *
+     * <p>曾经误写成 {@code meteor-client/xray}，导致 {@code hasProfile()} 恒为 false、
+     * 包每次启动都被 "Removed resource pack ... because it doesn't seem to exist anymore"
+     * 清掉，两个内置包从未真正加载。
+     */
+    private static final String XRAY_PACK_NAME = "meteor-client:xray";
 
     public static boolean isXrayPackEnabled() {
         MinecraftClient mc = MinecraftClient.getInstance();
@@ -202,7 +287,7 @@ public final class SoarIntegration {
 
     // ---- CozyUI+ 原版界面材质包 ----
 
-    private static final String COZYUI_PACK_NAME = "meteor-client/cozyui";
+    private static final String COZYUI_PACK_NAME = "meteor-client:cozyui";
 
     public static boolean isCozyUiEnabled() {
         MinecraftClient mc = MinecraftClient.getInstance();
@@ -221,44 +306,58 @@ public final class SoarIntegration {
     /**
      * 统一的资源包开关。
      *
-     * <h2>为什么不能只写 options.txt</h2>
-     * 内置包（NORMAL 类型）在 {@code GameOptions} 构造时还没进
-     * {@code ResourcePackManager} 的可用列表，于是 options 里的条目会被
-     * "doesn't seem to exist anymore" 规则清掉。实测日志：
-     * <pre>
-     * 12:31:55 [main] 注册=true id=meteor-client:xray type=NORMAL
-     * 12:32:11 [Render] Removed resource pack meteor-client/xray ...   ← 被清掉
-     * </pre>
-     * 因此这里<b>直接操作 ResourcePackManager 的启用集合</b>，并在写入 options
-     * 之前先把它加入"当前可用包"的判定路径，避免下次启动又被清。
+     * <p><b>注意：profile 名的确切写法由 Fabric 决定，不能想当然。</b>本项目踩过的坑：
+     * 曾把名字写成 {@code namespace/path}，实测 {@code getIds()} 里却是
+     * {@code namespace:path}；改对之后仍不生效，说明还存在其它形式。
+     * 因此现在统一走 {@link #resolvePackName} 逐个候选探测，两处（Manager 与 options）
+     * 都使用探测到的**同一个真实名字**，避免只改一处造成状态不一致。
+     * <p>两处都要写：{@code ResourcePackManager} 的启用集合决定本次会话实际加载哪些包；
+     * {@code options.resourcePacks} 决定下次启动和资源包界面里的显示状态。
+     * 只改前者会让界面显示不同步，只改后者会被上面的清理规则删掉。
      */
     private static void setPackEnabled(String packName, boolean enabled) {
         MinecraftClient mc = MinecraftClient.getInstance();
         if (mc.options == null) return;
 
+        // 解析真实 profile 名；两处（Manager 与 options）必须用同一个名字，否则必然有一处失效
+        String resolved = packName;
         try {
             var rpm = mc.getResourcePackManager();
-            if (rpm != null && rpm.hasProfile(packName)) {
-                // enable/disable 会自动写回 enabled 集合并处理依赖，比手工拼列表安全
-                if (enabled) rpm.enable(packName);
-                else rpm.disable(packName);
+            if (rpm != null) {
+                String r = resolvePackName(rpm, packName);
+                if (r != null) {
+                    resolved = r;
+                    if (enabled) rpm.enable(resolved);
+                    else rpm.disable(resolved);
+                    MeteorClient.LOG.info("[内置包] {} -> 真实 profile 名 '{}'，已{}",
+                            packName, resolved, enabled ? "启用" : "停用");
+                } else {
+                    MeteorClient.LOG.warn("[内置包] ResourcePackManager 里找不到 '{}' 的任何候选名，无法切换", packName);
+                }
             }
         } catch (Throwable t) {
             MeteorClient.LOG.warn("[内置包] 切换 {} 失败: {}", packName, t.toString());
         }
 
-        // 同步写 options，供资源包界面显示（即使被清也不影响当前会话）
+        // 同步写 options，供下次启动与资源包界面显示
         try {
             if (mc.options.resourcePacks != null) {
+                // 先把历史遗留的错误写法清掉，避免它再次触发 "doesn't seem to exist anymore"
+                for (String c : packNameCandidates(packName)) {
+                    if (!c.equals(resolved)) mc.options.resourcePacks.remove(c);
+                }
                 if (enabled) {
-                    if (!mc.options.resourcePacks.contains(packName)) mc.options.resourcePacks.add(packName);
-                    mc.options.incompatibleResourcePacks.remove(packName);
+                    if (!mc.options.resourcePacks.contains(resolved)) mc.options.resourcePacks.add(resolved);
+                    mc.options.incompatibleResourcePacks.remove(resolved);
                 } else {
-                    mc.options.resourcePacks.remove(packName);
+                    mc.options.resourcePacks.remove(resolved);
                 }
                 mc.options.write();
+                MeteorClient.LOG.info("[内置包] options.resourcePacks 现为 {}（resolved='{}'）",
+                        mc.options.resourcePacks, resolved);
             }
-        } catch (Throwable ignored) {
+        } catch (Throwable t) {
+            MeteorClient.LOG.warn("[内置包] 写 options 失败: {}", t.toString());
         }
 
         if (mc.getResourceManager() != null) {

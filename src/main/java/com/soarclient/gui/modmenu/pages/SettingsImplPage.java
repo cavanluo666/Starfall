@@ -75,7 +75,8 @@ public class SettingsImplPage extends Page {
         }
 
         contentBottom = offsetY;
-        scrollHelper.setMaxScroll(offsetY, height);
+        // 视口高度统一由基类按内容起点推算，避免与滚动条轨道口径不一致
+        updateScrollRange();
         Skia.restore();
     }
 

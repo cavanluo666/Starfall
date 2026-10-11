@@ -8,6 +8,7 @@ import com.soarclient.animation.Duration;
 import com.soarclient.animation.SimpleAnimation;
 import com.soarclient.animation.cubicbezier.impl.EaseStandard;
 import com.soarclient.animation.other.DummyAnimation;
+import com.soarclient.gui.api.Layout;
 import com.soarclient.management.color.api.ColorPalette;
 import com.soarclient.skia.Skia;
 import com.soarclient.skia.font.Fonts;
@@ -32,7 +33,8 @@ public class SearchBar extends Component {
 		super(x, y);
 		this.shortcutEvent = shortcutEvent;
 		this.width = width;
-		this.height = 42;
+		// 高度与 Layout 共用同一来源，避免页面按另一个高度算布局导致重叠
+		this.height = Layout.SEARCH_H;
 		this.setText(text);
 
 		if (getText().isBlank()) {
@@ -52,7 +54,7 @@ public class SearchBar extends Component {
 
 		float hintTextValue = hintTextAnimation.getValue();
 
-		Skia.drawRoundedRect(x, y, width, height, 20, palette.getSurface());
+		Skia.drawRoundedRect(x, y, width, height, 16, palette.getSurface());
 		Skia.drawHeightCenteredText(Icon.SEARCH, x + 12, y + (height / 2), palette.getOnSurface(), Fonts.getIcon(24));
 		Skia.drawHeightCenteredText(I18n.get(hintText), x + 40 - (25 * (1 - hintTextValue)), y + (height / 2),
 				ColorUtils.applyAlpha(palette.getOnSurfaceVariant(), (int) (hintTextValue * 255)),

@@ -127,18 +127,19 @@ public class ModsPage extends Page {
                 "[ModsDiag] x={} y={} w={} h={} contentTop={} barH={} top={} tabs={} sel={}",
                 x, y, width, height, Layout.contentTop(),
                 categoryBar.getHeight(),
-                Layout.contentTop() + categoryBar.getHeight() + 10f,
+                contentStartY(),
                 categoryBar.getTabCount(), categoryBar.getSelected());
         }
 
         // 分类栏固定在顶部，不随内容滚动
         float barX = x + padX;
-        float barY = y + Layout.contentTop() - 8f;
         float barW = width - padX * 2f;
-        categoryBar.setBounds(barX, barY, barW);
+        categoryBar.setBounds(barX, categoryBarTop(), barW);
+        // 把实测高度回传给基类，供内容起点 / 滚动条轨道 / 视口高度统一推导
+        categoryBarHeight = categoryBar.getHeight();
 
-        // 卡片区从顶栏下方开始（顶栏 = 搜索栏 + 分类栏）
-        float top = Layout.contentTop() + categoryBar.getHeight() + 26f;
+        // 卡片区从内容起点开始（内容起点已包含 搜索栏 + 分类栏 + 间距）
+        float contentY = contentStartY();
 
         // 本帧鼠标悬停的模块（用于显示说明）
         Module hovered = null;
@@ -159,7 +160,7 @@ public class ModsPage extends Page {
             if (!matches(m)) continue;
 
             float itemX = x + offsetX;
-            float itemY = y + top + offsetY;
+            float itemY = contentY + offsetY;
 
             focusAnimation.onTick(MouseUtils.isInside(mouseX, mouseY, itemX, itemY,
                     Layout.CARD_W, Layout.CARD_H + Layout.CARD_BAR_H) ? i.pressed ? 0.12F : 0.08F : 0, 8);
@@ -203,9 +204,9 @@ public class ModsPage extends Page {
             }
         }
 
-        // 内容总高 -> 滚动范围
-        contentBottom = top + offsetY + Layout.CARD_H + Layout.CARD_BAR_H + 16f;
-        scrollHelper.setMaxScroll(contentBottom, height);
+        // 内容总高 -> 滚动范围（视口由基类按内容起点推算）
+        contentBottom = contentY + offsetY + Layout.CARD_H + Layout.CARD_BAR_H + 16f;
+        updateScrollRange();
 
         Skia.restore();
 
@@ -215,8 +216,9 @@ public class ModsPage extends Page {
         ColorPalette pal = Soar.getInstance().getColorManager().getPalette();
 
         float padX2 = Layout.contentPadX();
-        float topY = y + Layout.contentTop() - 56f;          // 搜索栏顶部再往上一点
-        float topH = 56f + categoryBar.getHeight() + 14f;    // 搜索栏 + 间距 + 分类栏
+        // 顶栏底卡的几何与搜索栏/分类栏/内容起点共用同一套常量，避免各自硬编码后失配
+        float topY = y + Layout.searchTop() - 8f;                       // 搜索栏上方留一点内边距
+        float topH = Layout.topAreaHeight(categoryBarHeight) + 8f;      // 与 contentStartY 对齐
 
         // 不透明底卡（比面板底色略亮一档，形成"顶栏"层次）
         Skia.drawRoundedRectVarying(
@@ -270,9 +272,7 @@ public class ModsPage extends Page {
 
         // 分类栏
         categoryBar.mousePressed(mouseX, mouseY, button);
-        if (categoryBar.getHeight() > 0
-            && mouseY >= y + Layout.contentTop() - 8f
-            && mouseY <= y + Layout.contentTop() - 8f + categoryBar.getHeight()) {
+        if (isInsideCategoryBar(mouseY)) {
             return;
         }
 
@@ -286,6 +286,13 @@ public class ModsPage extends Page {
         }
     }
 
+    /** 鼠标是否落在分类栏矩形内（与绘制位置共用同一来源，避免命中区域错位）。 */
+    private boolean isInsideCategoryBar(double mouseY) {
+        return categoryBarHeight > 0f
+                && mouseY >= categoryBarTop()
+                && mouseY <= categoryBarTop() + categoryBarHeight;
+    }
+
     @Override
     public void mouseReleased(double mouseX, double mouseY, int button) {
 
@@ -294,9 +301,7 @@ public class ModsPage extends Page {
 
         // 分类栏
         categoryBar.mouseReleased(mouseX, mouseY, button);
-        if (categoryBar.getHeight() > 0
-            && mouseY >= y + Layout.contentTop() - 8f
-            && mouseY <= y + Layout.contentTop() - 8f + categoryBar.getHeight()) {
+        if (isInsideCategoryBar(mouseY)) {
             return;
         }
 
