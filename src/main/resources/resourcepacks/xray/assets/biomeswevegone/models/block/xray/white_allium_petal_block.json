@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/xray/cube_all",
+  "textures": {
+    "all": "biomeswevegone:block/white_allium_petal_block"
+  }
+}

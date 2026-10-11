@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "megamons:block/crystal_sun_stone_ore"
+  }
+}

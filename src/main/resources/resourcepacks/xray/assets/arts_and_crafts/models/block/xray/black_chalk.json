@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/xray/cube_all",
+  "textures": {
+    "all": "arts_and_crafts:block/black_chalk"
+  }
+}

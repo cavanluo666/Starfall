@@ -1,0 +1,8 @@
+{   "parent": "block/xray/template_path",
+  "textures": {
+    "particle": "biomeswevegone:block/sandy_dirt",
+    "top": "block/dirt_path_top",
+    "side": "biomeswevegone:block/sandy_dirt_path_side",
+    "bottom": "biomeswevegone:block/sandy_dirt"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "parent": "block/solid",
+  "textures": {
+    "down": "rustic_engineer:block/solarium_ore_deepslate",
+    "up": "rustic_engineer:block/solarium_ore_deepslate",
+    "north": "rustic_engineer:block/solarium_ore_deepslate",
+    "east": "rustic_engineer:block/solarium_ore_deepslate",
+    "south": "rustic_engineer:block/solarium_ore_deepslate",
+    "west": "rustic_engineer:block/solarium_ore_deepslate",
+    "particle": "rustic_engineer:block/solarium_ore_deepslate"
+  },
+  "render_type": "solid"
+}

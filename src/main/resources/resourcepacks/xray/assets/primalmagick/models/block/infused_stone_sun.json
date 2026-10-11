@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "primalmagick:block/infused_stone_sun"
+  }
+}

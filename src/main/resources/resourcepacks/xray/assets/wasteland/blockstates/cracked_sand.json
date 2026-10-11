@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "wasteland:block/xray/cracked_sand"
+      },
+      {
+        "model": "wasteland:block/xray/cracked_sand_mirrored"
+      },
+      {
+        "model": "wasteland:block/xray/cracked_sand",
+        "y": 180
+      },
+      {
+        "model": "wasteland:block/xray/cracked_sand_mirrored",
+         "y": 180
+      }
+    ]
+  }
+}

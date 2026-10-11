@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "twilightforest:block/xray/towerwood"
+      },
+      {
+        "model": "twilightforest:block/xray/towerwood_flipped"
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "uniquematerials:block/sandstone_halite_ore"
+  }
+}

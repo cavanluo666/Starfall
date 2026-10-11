@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "things:block/deepslate_gleaming_ore"
+  }
+}

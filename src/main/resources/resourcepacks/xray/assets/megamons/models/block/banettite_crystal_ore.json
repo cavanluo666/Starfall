@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "megamons:block/banettite_crystal_ore"
+  }
+}

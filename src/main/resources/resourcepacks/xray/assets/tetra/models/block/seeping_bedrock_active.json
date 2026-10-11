@@ -1,0 +1,12 @@
+{
+    "parent": "block/solid",
+    "textures": {
+        "particle": "minecraft:block/bedrock",
+        "down": "minecraft:block/bedrock",
+        "up": "tetra:block/seeping_bedrock_active",
+        "north": "minecraft:block/bedrock",
+        "east": "minecraft:block/bedrock",
+        "south": "minecraft:block/bedrock",
+        "west": "minecraft:block/bedrock"
+    }
+}

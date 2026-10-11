@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "snowy=false,mature=false": { "model": "blue_skies:block/xray/crescent_fruit_leaves" },
+		"snowy=true,mature=false": { "model": "blue_skies:block/xray/crescent_fruit_leaves_snowy" },
+		"snowy=false,mature=true": { "model": "blue_skies:block/xray/crescent_fruit_leaves_mature" },
+		"snowy=true,mature=true": { "model": "blue_skies:block/xray/crescent_fruit_leaves_mature_snowy" }
+    }
+}

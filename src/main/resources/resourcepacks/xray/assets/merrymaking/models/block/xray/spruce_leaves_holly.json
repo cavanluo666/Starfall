@@ -1,0 +1,7 @@
+{
+	"parent": "block/xray/cube_all",
+	"textures": {
+		"all": "merrymaking:block/leaves/leaves_spruce_holly",
+		"particle": "merrymaking:block/leaves/leaves_spruce_holly"
+	}
+}

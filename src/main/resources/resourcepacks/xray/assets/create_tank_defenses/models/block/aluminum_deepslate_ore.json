@@ -1,0 +1,13 @@
+{
+  "parent": "block/solid",
+  "textures": {
+    "down": "create_tank_defenses:block/aluminum_deepslate_ore",
+    "up": "create_tank_defenses:block/aluminum_deepslate_ore",
+    "north": "create_tank_defenses:block/aluminum_deepslate_ore",
+    "east": "create_tank_defenses:block/aluminum_deepslate_ore",
+    "south": "create_tank_defenses:block/aluminum_deepslate_ore",
+    "west": "create_tank_defenses:block/aluminum_deepslate_ore",
+    "particle": "create_tank_defenses:block/aluminum_deepslate_ore"
+  },
+  "render_type": "solid"
+}

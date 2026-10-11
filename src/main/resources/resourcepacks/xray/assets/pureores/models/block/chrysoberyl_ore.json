@@ -1,0 +1,7 @@
+{
+  "parent": "block/solid_all",
+  "textures": {
+    "all": "pureores:block/chrysoberyl_ore",
+    "particle": "pureores:block/chrysoberyl_ore"
+  }
+}

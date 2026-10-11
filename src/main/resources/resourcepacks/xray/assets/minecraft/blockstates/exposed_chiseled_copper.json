@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "minecraft:block/xray/exposed_chiseled_copper"
+    }
+  }
+}

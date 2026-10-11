@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "minecraft:block/xray/sculk"
+      },
+      {
+        "model": "minecraft:block/xray/sculk_mirrored"
+      },
+      {
+        "model": "minecraft:block/xray/sculk",
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/xray/sculk_mirrored",
+        "y": 180
+      }
+    ]
+  }
+}

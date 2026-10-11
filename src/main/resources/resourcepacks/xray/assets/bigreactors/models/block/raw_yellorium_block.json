@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "bigreactors:block/raw_yellorium_block"
+  }
+}

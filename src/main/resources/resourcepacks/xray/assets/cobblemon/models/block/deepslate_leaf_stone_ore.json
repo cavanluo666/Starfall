@@ -1,0 +1,6 @@
+{
+  "parent": "block/solid_all",
+  "textures": {
+    "all": "cobblemon:block/deepslate_leaf_stone_ore"
+  }
+}

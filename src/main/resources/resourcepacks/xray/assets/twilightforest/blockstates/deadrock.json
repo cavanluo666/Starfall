@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "twilightforest:block/xray/deadrock"
+      },
+      {
+        "model": "twilightforest:block/xray/deadrock",
+        "y": 180
+      },
+      {
+        "model": "twilightforest:block/xray/deadrock",
+        "y": 90
+      },
+      {
+        "model": "twilightforest:block/xray/deadrock",
+        "y": 270
+      }
+    ]
+  }
+}

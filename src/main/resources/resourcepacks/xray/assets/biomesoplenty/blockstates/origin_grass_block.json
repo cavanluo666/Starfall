@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "snowy=false": { "model": "biomesoplenty:block/xray/origin_grass_block" },
+    "snowy=true": { "model": "biomesoplenty:block/xray/origin_grass_block_snow" }
+  }
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "block/xray/leaves",
+    "textures": {
+        "all": "biomesoplenty:block/willow_leaves"
+    }
+}

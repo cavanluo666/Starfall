@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/xray/cube_bottom_top",
+  "textures": {
+    "bottom": "eternal_starlight:block/northland_leaves",
+    "side": "eternal_starlight:block/northland_leaves_snowy",
+    "top": "eternal_starlight:block/northland_leaves"
+  }
+}

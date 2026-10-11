@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [ 
+			{ "model": "blue_skies:block/xray/starlit_leaves_snowy", "weight": 3 }, 
+			{ "model": "blue_skies:block/xray/starlit_leaves_snowy_xmas_0" }, 
+			{ "model": "blue_skies:block/xray/starlit_leaves_snowy_xmas_1" }, 
+			{ "model": "blue_skies:block/xray/starlit_leaves_snowy_xmas_2" } 
+		]
+	}
+}

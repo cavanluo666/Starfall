@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "type=bottom": { "model": "tetra:block/xray/forged_platform_slab_bottom" },
+        "type=top": { "model": "tetra:block/xray/forged_platform_slab_top" },
+        "type=double": { "model": "tetra:block/xray/forged_platform" }
+    }
+}
+

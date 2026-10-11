@@ -1,0 +1,8 @@
+{
+    "parent": "block/xray/leaves",
+    "render_type": "minecraft:cutout_mipped",
+    "textures": {
+        "all": "atmospheric:block/flowering_morado_leaves",
+        "overlay": "atmospheric:block/flowering_morado_leaves_overlay"
+    }
+}

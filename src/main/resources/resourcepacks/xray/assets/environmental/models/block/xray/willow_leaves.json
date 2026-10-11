@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/xray/leaves",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "all": "environmental:block/willow_leaves"
+  }
+}

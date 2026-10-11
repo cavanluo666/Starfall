@@ -1,0 +1,12 @@
+{
+  "parent": "block/solid",
+  "textures": {
+    "down": "pureores:block/jadeite_ore",
+    "up": "pureores:block/jadeite_ore",
+    "north": "pureores:block/jadeite_ore",
+    "east": "pureores:block/jadeite_ore",
+    "south": "pureores:block/jadeite_ore",
+    "west": "pureores:block/jadeite_ore",
+    "particle": "pureores:block/jadeite_ore"
+  }
+}

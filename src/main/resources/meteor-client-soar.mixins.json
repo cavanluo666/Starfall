@@ -1,0 +1,21 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "meteordevelopment.meteorclient.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "HitMarkerMixin",
+    "BetterScoreboardMixin",
+    "NoSneakAnimationMixin",
+    "BetterItemSelectorMixin",
+    "BetterMouseLogicMixin",
+    "SmoothHotbarMixin",
+    "CustomBlockOutlineMixin",
+    "LegacyAnimationsMixin",
+    "DynamicMotionBlurMixin",
+    "CustomEnchantmentGlintMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

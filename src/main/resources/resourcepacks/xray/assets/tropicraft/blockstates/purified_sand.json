@@ -1,0 +1,256 @@
+{
+  "variants": {
+    "underwater=false": [
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "y": 90
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "y": 180
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "y": 270
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 90
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 180
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 270
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 270,
+        "y": 270
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand_calcified",
+        "weight": 5
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand_calcified",
+        "weight": 5,
+        "y": 90
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand_calcified",
+        "weight": 5,
+        "y": 180
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand_calcified",
+        "weight": 5,
+        "y": 270
+      }
+    ],
+    "underwater=true": [
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "y": 90
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "y": 180
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "y": 270
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 90
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 180
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 270
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand",
+        "weight": 50,
+        "x": 270,
+        "y": 270
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand_dune1",
+        "weight": 10
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand_dune1",
+        "weight": 10,
+        "y": 90
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand_dune1",
+        "weight": 10,
+        "y": 180
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand_dune1",
+        "weight": 10,
+        "y": 270
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand_dune2",
+        "weight": 10
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand_dune2",
+        "weight": 10,
+        "y": 90
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand_dune2",
+        "weight": 10,
+        "y": 180
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand_dune2",
+        "weight": 10,
+        "y": 270
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand_starfish"
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand_starfish",
+        "y": 90
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand_starfish",
+        "y": 180
+      },
+      {
+        "model": "tropicraft:block/xray/purified_sand_starfish",
+        "y": 270
+      }
+    ]
+  }
+}

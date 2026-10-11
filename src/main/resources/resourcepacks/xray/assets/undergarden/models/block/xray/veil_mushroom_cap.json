@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/xray/cube_all",
+  "textures": {
+    "all": "undergarden:block/veil_mushroom_cap"
+  }
+}

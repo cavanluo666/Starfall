@@ -1,0 +1,28 @@
+# ---- 构建产物（可由源码重建，不入库）----
+build/
+.gradle/
+out/
+*.log
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# 本地 maven 仓库
+# 注意：local-maven/ 里是 meteordevelopment:baritone:1.21-patched，
+# 它是被 build.gradle 用坐标依赖引入的**构建必需**本地依赖
+# （libs/baritone-1.21-patched.jar 的安装产物，两者哈希一致，1.5 MB）。
+# 若忽略它，clone 后 ./gradlew build 会因缺少该依赖直接失败，
+# 且原版 baritone 的 fabric.mod.json 写死 "minecraft": "1.21"，
+# 在 1.21.1 上会被 Fabric 静默跳过（寻路退化成 none）。
+# 因此这里**刻意不忽略**，保证仓库自包含、开箱可构建。
+!local-maven/
+
+# 临时文件
+*.tmp
+*.bak
+run/

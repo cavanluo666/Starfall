@@ -1,0 +1,7 @@
+{
+  "parent": "block/xray/leaves",
+  "textures": {
+    "all": "regions_unexplored:block/cobalt_webbing",
+    "particle": "regions_unexplored:block/cobalt_webbing"
+  }
+}

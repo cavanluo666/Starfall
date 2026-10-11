@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "deeperdarker:block/sculk_stone_coal_ore"
+  }
+}

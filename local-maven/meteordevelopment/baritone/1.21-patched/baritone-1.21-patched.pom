@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>meteordevelopment</groupId>
+  <artifactId>baritone</artifactId>
+  <version>1.21-patched</version>
+  <packaging>jar</packaging>
+  <name>Baritone (patched for 1.21.1)</name>
+  <description>Baritone 1.21 with minecraft version constraint relaxed to &gt;=1.21 &lt;1.22</description>
+</project>

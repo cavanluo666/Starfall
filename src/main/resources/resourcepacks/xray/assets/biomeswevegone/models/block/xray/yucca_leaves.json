@@ -1,0 +1,7 @@
+{
+  "parent": "block/xray/leaves",
+  "textures": {
+    "particle": "biomeswevegone:block/yucca_leaves",
+    "all": "biomeswevegone:block/yucca_leaves"
+  }
+}

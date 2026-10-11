@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/xray/cube_all",
+  "textures": {
+    "all": "twilightforest:block/cracked_towerwood",
+    "down": "#all",
+    "east": "#all",
+    "north": "#all",
+    "particle": "#north",
+    "south": "#all",
+    "up": "#all",
+    "west": "#all"
+  }
+}

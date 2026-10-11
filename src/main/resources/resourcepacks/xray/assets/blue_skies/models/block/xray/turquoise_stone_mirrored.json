@@ -1,0 +1,6 @@
+{
+    "parent": "block/xray/cube_mirrored_all",
+    "textures": {
+        "all": "blue_skies:block/stone/turquoise_stone"
+    }
+}

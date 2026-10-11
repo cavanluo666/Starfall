@@ -1,0 +1,13 @@
+{
+  "parent": "block/solid",
+  "textures": {
+    "down": "fossilsorigins:block/amber_ore",
+    "up": "fossilsorigins:block/amber_ore",
+    "north": "fossilsorigins:block/amber_ore",
+    "east": "fossilsorigins:block/amber_ore",
+    "south": "fossilsorigins:block/amber_ore",
+    "west": "fossilsorigins:block/amber_ore",
+    "particle": "fossilsorigins:block/amber_ore"
+  },
+  "render_type": "solid"
+}

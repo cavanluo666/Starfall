@@ -1,0 +1,24 @@
+{
+  "variants": {
+    "snowy=false": [
+      {
+        "model": "biomeswevegone:block/xray/overgrown_stone"
+      },
+      {
+        "model": "biomeswevegone:block/xray/overgrown_stone",
+        "y": 90
+      },
+      {
+        "model": "biomeswevegone:block/xray/overgrown_stone",
+        "y": 180
+      },
+      {
+        "model": "biomeswevegone:block/xray/overgrown_stone",
+        "y": 270
+      }
+    ],
+    "snowy=true": {
+      "model": "biomeswevegone:block/xray/overgrown_stone_snowy"
+    }
+  }
+}

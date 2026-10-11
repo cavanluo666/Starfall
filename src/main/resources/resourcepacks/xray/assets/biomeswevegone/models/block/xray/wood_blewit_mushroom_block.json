@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:block/xray/cube_all",
+    "textures": {
+        "all": "biomeswevegone:block/wood_blewit_mushroom_block"
+    }
+}

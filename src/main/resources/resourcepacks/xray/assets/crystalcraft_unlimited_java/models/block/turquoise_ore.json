@@ -1,0 +1,8 @@
+{
+  "parent": "block/solid_all",
+  "textures": {
+    "all": "crystalcraft_unlimited_java:block/oiuygfyu",
+    "particle": "crystalcraft_unlimited_java:block/oiuygfyu"
+  },
+  "render_type": "solid"
+}

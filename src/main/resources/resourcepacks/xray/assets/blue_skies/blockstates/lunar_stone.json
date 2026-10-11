@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "": [
+            { "model": "blue_skies:block/xray/lunar_stone" },
+            { "model": "blue_skies:block/xray/lunar_stone_mirrored" },
+            { "model": "blue_skies:block/xray/lunar_stone", "y": 180 },
+            { "model": "blue_skies:block/xray/lunar_stone_mirrored", "y": 180 }
+        ]
+    }
+}

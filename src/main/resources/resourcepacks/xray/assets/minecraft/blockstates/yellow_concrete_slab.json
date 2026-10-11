@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "minecraft:block/xray/yellow_concrete_slab"
+    },
+    "type=double": {
+      "model": "minecraft:block/xray/yellow_concrete"
+    },
+    "type=top": {
+      "model": "minecraft:block/xray/yellow_concrete_slab_top"
+    }
+  }
+}

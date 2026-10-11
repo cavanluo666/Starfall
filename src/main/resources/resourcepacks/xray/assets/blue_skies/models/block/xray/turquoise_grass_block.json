@@ -1,0 +1,10 @@
+{
+    "parent": "block/xray/grass_block",
+	"textures": {
+		"particle": "blue_skies:block/dirt_grass/turquoise_dirt",
+		"bottom": "blue_skies:block/dirt_grass/turquoise_dirt",
+		"top": "blue_skies:block/dirt_grass/turquoise_grass_top",
+		"side": "blue_skies:block/dirt_grass/turquoise_grass_side",
+        "overlay": "blue_skies:block/dirt_grass/turquoise_grass_overlay"
+	}
+}

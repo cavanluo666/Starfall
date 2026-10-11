@@ -1,0 +1,212 @@
+plugins {
+    id "fabric-loom" version "1.7-SNAPSHOT"
+    id "maven-publish"
+    id "com.github.johnrengelman.shadow" version "8.1.1"
+}
+
+base {
+    archivesBaseName = project.archives_base_name
+    version = project.mod_version + (project.hasProperty("devbuild") ? ("-" + project.findProperty("devbuild")) : "")
+    group = project.maven_group
+}
+
+repositories {
+    maven {
+        name = "local-soar"
+        url = uri("local-maven")
+    }
+    maven {
+        name = "meteor-maven"
+        url = "https://maven.meteordev.org/releases"
+    }
+    maven {
+        name = "meteor-maven-snapshots"
+        url = "https://maven.meteordev.org/snapshots"
+    }
+    maven {
+        name = "modrinth"
+        url = "https://api.modrinth.com/maven"
+
+        content {
+            includeGroup "maven.modrinth"
+        }
+    }
+    // vram 已下线（maven.vram.io 不可达），依赖改由 Modrinth 官方 maven 提供
+    maven {
+        name = "ViaVersion"
+        url = "https://repo.viaversion.com"
+    }
+    mavenCentral()
+}
+
+configurations {
+    // include mods
+    modImplementation.extendsFrom(modInclude)
+    include.extendsFrom(modInclude)
+
+    // include libraries
+    implementation.extendsFrom(library)
+    shadow.extendsFrom(library)
+}
+
+dependencies {
+    // Fabric
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modInclude fabricApi.module("fabric-resource-loader-v0", project.fapi_version)
+
+    // Compat fixes
+    modCompileOnly fabricApi.module("fabric-renderer-indigo", project.fapi_version)
+    modCompileOnly("maven.modrinth:sodium:${project.sodium_version}") { transitive = false }
+    modCompileOnly("maven.modrinth:lithium:${project.lithium_version}") { transitive = false }
+    modCompileOnly("maven.modrinth:iris:${project.iris_version}") { transitive = false }
+    modCompileOnly("de.florianmichael:ViaFabricPlus:${project.viafabricplus_version}") { transitive = false }
+
+    // Baritone (https://github.com/MeteorDevelopment/baritone)
+    // 内置 Baritone（打包进 jar，玩家无需单独安装）
+    // Baritone（内置，玩家无需单独安装）
+    // 用本地已放宽版本约束的副本：maven 原件的 fabric.mod.json 写死 "minecraft": "1.21"，
+    // 在 1.21.1 上会被 Fabric 静默跳过，导致寻路退化为 none。见 libs/baritone-1.21-patched.jar。
+    modImplementation "meteordevelopment:baritone:1.21-patched"
+    include "meteordevelopment:baritone:1.21-patched"
+
+    // Libraries
+    library "meteordevelopment:orbit:${project.orbit_version}"
+    library "meteordevelopment:starscript:${project.starscript_version}"
+    library "meteordevelopment:discord-ipc:${project.discordipc_version}"
+    library "org.reflections:reflections:${project.reflections_version}"
+    library("io.netty:netty-handler-proxy:${project.netty_version}") { transitive = false }
+    library("io.netty:netty-codec-socks:${project.netty_version}") { transitive = false }
+    library "de.florianmichael:WaybackAuthLib:${project.waybackauthlib_version}"
+
+    // ---- SoarClient (Material You) UI 栈 ----
+    // Skia 渲染（humbleui 提供，含各平台原生库）
+    library "io.github.humbleui:types:${project.skija_types_version}"
+    // skija-shared 是 Skija 的 Java API 本体（平台包只是传递依赖，Fabric 的 include 不会自动带上）
+    implementation "io.github.humbleui:skija-shared:${project.skija_version}"
+    include "io.github.humbleui:skija-shared:${project.skija_version}"
+    implementation "io.github.humbleui:skija-windows-x64:${project.skija_version}"
+    include "io.github.humbleui:skija-windows-x64:${project.skija_version}"
+    include "io.github.humbleui:skija-linux-x64:${project.skija_version}"
+    include "io.github.humbleui:skija-macos-x64:${project.skija_version}"
+    include "io.github.humbleui:skija-macos-arm64:${project.skija_version}"
+    include "io.github.humbleui:types:${project.skija_types_version}"
+    // Soar UI 用到的通用库
+    library "com.github.ben-manes.caffeine:caffeine:${project.caffeine_version}"
+    library "it.unimi.dsi:fastutil:${project.fastutil_version}"
+    library "org.joml:joml:${project.joml_version}"
+    library "commons-io:commons-io:${project.commonsio_version}"
+    // JNA：用于输入法修复（调用 imm32.dll）。Minecraft 自带同版本，这里只声明编译期可见性
+    compileOnly "net.java.dev.jna:jna:5.14.0"
+    // 文件选择对话框（Soar 的 FileSelector 用到）
+    library "org.lwjgl:lwjgl-nfd:${project.lwjgl_version}"
+    include "org.lwjgl:lwjgl-nfd:${project.lwjgl_version}"
+    include "org.lwjgl:lwjgl-nfd:${project.lwjgl_version}:natives-windows"
+    include "org.lwjgl:lwjgl-nfd:${project.lwjgl_version}:natives-linux"
+    include "org.lwjgl:lwjgl-nfd:${project.lwjgl_version}:natives-macos"
+
+    // Launch sub project
+    shadow project(":launch")
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/meteor-client.accesswidener")
+}
+
+afterEvaluate {
+    migrateMappings.configure {
+        outputDir = project.file("src/main/java")
+    }
+}
+
+tasks {
+    processResources {
+        def propertyMap = [
+            "version"          : project.version,
+            "devbuild"         : project.findProperty("devbuild") ?: "",
+            "commit"           : project.findProperty("commit") ?: "",
+            "minecraft_version": project.minecraft_version,
+            "loader_version"   : project.loader_version
+        ]
+
+        inputs.properties(propertyMap)
+        filesMatching("fabric.mod.json") {
+            expand(propertyMap)
+        }
+    }
+
+    jar {
+        from("LICENSE") {
+            rename { "${it}_${project.base.archivesBaseName}" }
+        }
+
+        manifest {
+            attributes("Main-Class": "meteordevelopment.meteorclient.Main")
+        }
+    }
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+
+        withSourcesJar()
+        withJavadocJar()
+    }
+
+    shadowJar {
+        configurations = [project.configurations.shadow]
+
+        from("LICENSE") {
+            rename { "${it}_${project.base.archivesBaseName}" }
+        }
+
+        dependencies {
+            exclude {
+                it.moduleGroup == "org.slf4j"
+            }
+        }
+    }
+
+    remapJar {
+        dependsOn shadowJar
+        inputFile.set(shadowJar.archiveFile)
+    }
+
+    javadoc {
+        options.addStringOption("Xdoclint:none", "-quiet")
+        options.encoding = "UTF-8"
+    }
+
+    build {
+        dependsOn javadocJar
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = "meteor-client"
+            version = project.hasProperty("devbuild") ? (project.mod_version + "-SNAPSHOT") : project.mod_version
+
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            name = "meteor-maven"
+            url = project.hasProperty("devbuild") ? "https://maven.meteordev.org/snapshots" : "https://maven.meteordev.org/releases"
+
+            credentials {
+                username = System.getenv("MAVEN_METEOR_ALIAS")
+                password = System.getenv("MAVEN_METEOR_TOKEN")
+            }
+
+            authentication {
+                basic(BasicAuthentication)
+            }
+        }
+    }
+}
+

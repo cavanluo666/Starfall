@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/xray/leaves",
+  "textures": {
+    "all": "biomeswevegone:block/yellow_birch_leaves"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "block/solid_all",
+  "textures": {
+    "all": "darkerdepths:block/limestone_redstone_ore"
+  }
+}

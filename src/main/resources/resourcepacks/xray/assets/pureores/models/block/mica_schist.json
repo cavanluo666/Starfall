@@ -1,0 +1,7 @@
+{
+  "parent": "block/solid_all",
+  "textures": {
+    "all": "pureores:block/mica_schist",
+    "particle": "pureores:block/mica_schist"
+  }
+}

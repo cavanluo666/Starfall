@@ -1,0 +1,6 @@
+{
+  "parent": "block/solid_all",
+  "textures": {
+    "all": "cobblemon:block/ice_stone_ore"
+  }
+}

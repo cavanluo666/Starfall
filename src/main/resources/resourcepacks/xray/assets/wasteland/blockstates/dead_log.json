@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y":    { "model": "wasteland:block/xray/dead_log" },
+    "axis=z":     { "model": "wasteland:block/xray/dead_log", "x": 90 },
+    "axis=x":     { "model": "wasteland:block/xray/dead_log", "x": 90, "y": 90 }
+  }
+}

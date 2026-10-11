@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "techreborn:block/ore/deepslate/deepslate_tin_ore"
+  }
+}

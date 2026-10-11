@@ -1,0 +1,133 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          
+          "neoforge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15,
+            "color": "ffff0000",
+            "sky_light": 15
+          },
+          "texture": "#cloud"
+        },
+        "east": {
+          
+          "neoforge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15,
+            "color": "ffff0000",
+            "sky_light": 15
+          },
+          "texture": "#cloud"
+        },
+        "north": {
+          
+          "neoforge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15,
+            "color": "ffff0000",
+            "sky_light": 15
+          },
+          "texture": "#cloud"
+        },
+        "south": {
+          
+          "neoforge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15,
+            "color": "ffff0000",
+            "sky_light": 15
+          },
+          "texture": "#cloud"
+        },
+        "up": {
+          
+          "neoforge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15,
+            "color": "ffff0000",
+            "sky_light": 15
+          },
+          "texture": "#cloud"
+        },
+        "west": {
+          
+          "neoforge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15,
+            "color": "ffff0000",
+            "sky_light": 15
+          },
+          "texture": "#cloud"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "neoforge_data": {
+        "ambient_occlusion": false,
+        "block_light": 15,
+        "color": "ffff0000",
+        "sky_light": 15
+      },
+      "shade": false,
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {
+				"neoforge_data": {
+                "block_light": 15,
+                "sky_light": 15      },
+      "faces": {
+        "down": {
+          
+          "texture": "#tex"
+        },
+        "east": {
+          
+          "texture": "#tex"
+        },
+        "north": {
+          
+          "texture": "#tex"
+        },
+        "south": {
+          
+          "texture": "#tex"
+        },
+        "up": {
+          
+          "texture": "#tex"
+        },
+        "west": {
+          
+          "texture": "#tex"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    }
+  ],
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "cloud": "xycraft_core:block/cloudfx",
+    "particle": "xycraft_core:block/cloudfx",
+    "tex": "xycraft_world:block/xychorium_ore_deepslate"
+  }
+}

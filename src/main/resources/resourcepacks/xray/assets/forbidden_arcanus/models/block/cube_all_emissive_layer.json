@@ -1,0 +1,34 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "#all"
+    },
+    "elements": [
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "down":  { "texture": "#all" },
+                "up":    { "texture": "#all" },
+                "north": { "texture": "#all" },
+                "south": { "texture": "#all" },
+                "west":  { "texture": "#all" },
+                "east":  { "texture": "#all" }
+            }
+        },
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "down":  { "texture": "#layer" },
+                "up":    { "texture": "#layer" },
+                "north": { "texture": "#layer" },
+                "south": { "texture": "#layer" },
+                "west":  { "texture": "#layer" },
+                "east":  { "texture": "#layer" }
+            },
+            "neoforge_data": {
+                "block_light": 15,
+                "sky_light": 15
+            }
+        }
+    ]
+}

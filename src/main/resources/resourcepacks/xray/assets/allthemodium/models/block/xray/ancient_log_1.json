@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/xray/cube_column",
+  "textures": {
+    "end": "allthemodium:block/ancient_log_1_top",
+    "side": "allthemodium:block/ancient_log_1"
+  }
+}

@@ -1,0 +1,11 @@
+{
+    "variants": {
+        "snowy=false,growth=cant_grow": { "model": "blue_skies:block/xray/cherry_leaves_cant_grow" },
+		"snowy=false,growth=can_grow": { "model": "blue_skies:block/xray/cherry_leaves_can_grow" },
+		"snowy=false,growth=grown": { "model": "blue_skies:block/xray/cherry_leaves_grown" },
+		
+		"snowy=true,growth=cant_grow": { "model": "blue_skies:block/xray/cherry_leaves_cant_grow_snowy" },
+		"snowy=true,growth=can_grow": { "model": "blue_skies:block/xray/cherry_leaves_can_grow_snowy" },
+		"snowy=true,growth=grown": { "model": "blue_skies:block/xray/cherry_leaves_grown_snowy" }
+    }
+}

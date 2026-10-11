@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "draconicevolution:block/overworld_draconium_ore"
+  }
+}

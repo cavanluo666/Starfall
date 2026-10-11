@@ -1,0 +1,13 @@
+{
+  "parent": "block/solid",
+  "textures": {
+    "down": "unearthed_journey:block/slate_manganese_ore",
+    "up": "unearthed_journey:block/slate_manganese_ore",
+    "north": "unearthed_journey:block/slate_manganese_ore",
+    "east": "unearthed_journey:block/slate_manganese_ore",
+    "south": "unearthed_journey:block/slate_manganese_ore",
+    "west": "unearthed_journey:block/slate_manganese_ore",
+    "particle": "unearthed_journey:block/slate_manganese_ore"
+  },
+  "render_type": "solid"
+}

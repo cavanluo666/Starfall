@@ -1,0 +1,10 @@
+{
+  "pack": {
+    "pack_format": 34,
+    "supported_formats": {
+      "min_inclusive": 16,
+      "max_inclusive": 999
+    },
+    "description": "Xray Ultimate 矿石透视 v5.4.3（内置）"
+  }
+}

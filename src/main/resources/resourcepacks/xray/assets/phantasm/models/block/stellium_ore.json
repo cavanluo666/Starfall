@@ -1,0 +1,8 @@
+{
+  "parent": "block/solid_all",
+  "textures": {
+    "all": "phantasm:blocks/stellium_ore",
+    "particle": "phantasm:blocks/stellium_ore"
+  },
+  "render_type": "solid"
+}

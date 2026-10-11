@@ -1,0 +1,92 @@
+{
+  "parent": "minecraft:block/block",
+  "elements": [
+    {			"light_emission": 15,
+			"neoforge_data": {
+                "block_light": 15,
+                "sky_light": 15      },
+      "faces": {
+        "down": {
+
+          "texture": "#texture"
+        },
+        "east": {
+
+          "texture": "#texture"
+        },
+        "north": {
+
+          "texture": "#texture"
+        },
+        "south": {
+
+          "texture": "#texture"
+        },
+        "up": {
+
+          "texture": "#texture"
+        },
+        "west": {
+
+          "texture": "#texture"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {			"light_emission": 15,
+			"neoforge_data": {
+                "block_light": 15,
+                "sky_light": 15      },
+      "faces": {
+        "down": {
+
+          "texture": "#overlay"
+        },
+        "east": {
+
+          "texture": "#overlay"
+        },
+        "north": {
+
+          "texture": "#overlay"
+        },
+        "south": {
+
+          "texture": "#overlay"
+        },
+        "up": {
+
+          "texture": "#overlay"
+        },
+        "west": {
+
+          "texture": "#overlay"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    }
+  ],
+  "textures": {
+    "overlay": "#",
+    "particle": "#",
+    "texture": "#"
+  }
+}

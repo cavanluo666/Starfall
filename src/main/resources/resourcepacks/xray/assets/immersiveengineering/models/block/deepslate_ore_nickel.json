@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "immersiveengineering:block/metal/deepslate_ore_nickel"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/xray/cube",
+  "textures": {
+    "particle": "wasteland:block/dead_log",
+    "down": "wasteland:block/dead_log_top",
+    "up": "wasteland:block/dead_log_top",
+    "north": "wasteland:block/dead_log",
+    "south": "wasteland:block/dead_log",
+    "west": "wasteland:block/dead_log",
+    "east": "wasteland:block/dead_log"
+  }
+}

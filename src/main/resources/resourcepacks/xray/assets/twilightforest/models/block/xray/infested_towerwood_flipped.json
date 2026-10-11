@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/xray/cube_all",
+  "textures": {
+    "all": "twilightforest:block/infested_towerwood",
+    "particle": "#all"
+  }
+}

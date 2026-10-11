@@ -1,0 +1,7 @@
+{
+    "parent": "blue_skies:block/xray/blueskies_leaves",
+    "textures": {
+        "all": "blue_skies:block/leaves/crystallized_leaves"
+    },
+	"render_type": "translucent"
+}

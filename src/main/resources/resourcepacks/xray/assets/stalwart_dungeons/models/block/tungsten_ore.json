@@ -1,0 +1,8 @@
+{
+  "parent": "block/solid_all",
+  "textures": {
+    "all": "stalwart_dungeons:block/tungsten_ore",
+    "particle": "stalwart_dungeons:block/tungsten_ore"
+  },
+  "render_type": "solid"
+}

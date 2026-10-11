@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/xray/cube_all",
+  "textures": {
+    "all": "twilightforest:block/mossy_towerwood",
+    "particle": "#all"
+  }
+}

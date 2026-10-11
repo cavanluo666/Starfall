@@ -1,0 +1,13 @@
+{
+  "parent": "block/solid",
+  "textures": {
+    "down": "unearthed_journey:block/chert_emerald_ore",
+    "up": "unearthed_journey:block/chert_emerald_ore",
+    "north": "unearthed_journey:block/chert_emerald_ore",
+    "east": "unearthed_journey:block/chert_emerald_ore",
+    "south": "unearthed_journey:block/chert_emerald_ore",
+    "west": "unearthed_journey:block/chert_emerald_ore",
+    "particle": "unearthed_journey:block/chert_emerald_ore"
+  },
+  "render_type": "solid"
+}

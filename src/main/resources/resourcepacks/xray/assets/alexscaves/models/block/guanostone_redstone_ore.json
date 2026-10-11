@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/solid_column",
+  "textures": {
+    "end": "alexscaves:block/guanostone_redstone_ore",
+    "side": "alexscaves:block/guanostone_redstone_ore"
+  }
+}

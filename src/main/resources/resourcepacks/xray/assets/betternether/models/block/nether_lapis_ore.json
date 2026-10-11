@@ -1,0 +1,6 @@
+{
+    "parent": "block/solid_all",
+    "textures": {
+        "all": "betternether:block/nether_lapis_ore"
+    }
+}

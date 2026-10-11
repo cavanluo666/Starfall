@@ -1,0 +1,6 @@
+{
+	"parent": "block/solid_all",
+	"textures": {
+		"all": "blue_skies:block/ores/falsite_ore"
+	}
+}

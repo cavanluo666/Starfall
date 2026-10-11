@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/xray/leaves",
+  "textures": {
+    "all": "werewolves:block/jacaranda_leaves"
+  }
+}

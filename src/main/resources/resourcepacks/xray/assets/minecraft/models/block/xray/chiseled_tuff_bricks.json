@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/xray/cube_column",
+  "textures": {
+    "end": "minecraft:block/chiseled_tuff_bricks_top",
+    "side": "minecraft:block/chiseled_tuff_bricks"
+  }
+}

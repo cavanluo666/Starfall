@@ -1,0 +1,13 @@
+{
+  "parent": "block/solid",
+  "textures": {
+    "down": "unearthed_journey:block/slate_gold_ore",
+    "up": "unearthed_journey:block/slate_gold_ore",
+    "north": "unearthed_journey:block/slate_gold_ore",
+    "east": "unearthed_journey:block/slate_gold_ore",
+    "south": "unearthed_journey:block/slate_gold_ore",
+    "west": "unearthed_journey:block/slate_gold_ore",
+    "particle": "unearthed_journey:block/slate_gold_ore"
+  },
+  "render_type": "solid"
+}

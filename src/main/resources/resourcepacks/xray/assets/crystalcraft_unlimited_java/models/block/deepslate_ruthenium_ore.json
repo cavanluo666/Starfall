@@ -1,0 +1,8 @@
+{
+  "parent": "block/solid_all",
+  "textures": {
+    "all": "crystalcraft_unlimited_java:block/pa_iridium_ingo_2_8_3_1_2_4_6_5_6",
+    "particle": "crystalcraft_unlimited_java:block/pa_iridium_ingo_2_8_3_1_2_4_6_5_6"
+  },
+  "render_type": "solid"
+}

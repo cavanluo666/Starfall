@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/xray/cube_column",
+  "textures": {
+    "end": "twilightforest:block/mangrove_log",
+    "side": "twilightforest:block/mangrove_log"
+  }
+}

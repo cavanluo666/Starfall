@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "minecraft:block/xray/sulfur_slab"
+    },
+    "type=double": {
+      "model": "minecraft:block/xray/sulfur"
+    },
+    "type=top": {
+      "model": "minecraft:block/xray/sulfur_slab_top"
+    }
+  }
+}

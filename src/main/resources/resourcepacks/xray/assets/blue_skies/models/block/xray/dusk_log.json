@@ -1,0 +1,7 @@
+{
+	"parent": "block/xray/cube_column",
+	"textures": {
+		"end": "blue_skies:block/wood/dusk_log_top",
+		"side": "blue_skies:block/wood/dusk_log_side"
+	}
+}

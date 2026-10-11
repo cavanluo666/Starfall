@@ -1,0 +1,7 @@
+{
+    "parent": "blue_skies:block/xray/blueskies_leaves_snowy",
+    "textures": {
+        "all": "blue_skies:block/leaves/cherry_leaves_can_grow",
+		"snowy": "blue_skies:block/leaves/cherry_leaves_can_grow_snowy"
+	}
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "block/xray/leaves",
+    "textures": {
+        "all": "upgrade_aquatic:block/river_leaves"
+    }
+}

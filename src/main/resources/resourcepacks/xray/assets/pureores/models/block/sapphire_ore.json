@@ -1,0 +1,7 @@
+{
+  "parent": "block/solid_all",
+  "textures": {
+    "all": "pureores:block/sapphire_ore",
+    "particle": "pureores:block/sapphire_ore"
+  }
+}

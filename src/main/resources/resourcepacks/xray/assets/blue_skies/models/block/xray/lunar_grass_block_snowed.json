@@ -1,0 +1,9 @@
+{
+    "parent": "block/xray/cube_bottom_top",
+    "textures": {
+        "particle": "blue_skies:block/dirt_grass/lunar_dirt",
+        "bottom": "blue_skies:block/dirt_grass/lunar_dirt",
+        "top": "blue_skies:block/dirt_grass/lunar_grass_top",
+        "side": "blue_skies:block/dirt_grass/lunar_grass_side_snowed"
+    }
+}

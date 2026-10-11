@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/xray/cube_column",
+  "textures": {
+    "end": "werewolves:block/jacaranda_log_top",
+    "side": "werewolves:block/jacaranda_log"
+  }
+}

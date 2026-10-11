@@ -1,0 +1,8 @@
+{
+  "parent": "block/solid_all",
+  "textures": {
+    "all": "gamma_creatures:block/adamita_redstone",
+    "particle": "gamma_creatures:block/adamita_redstone"
+  },
+  "render_type": "solid"
+}

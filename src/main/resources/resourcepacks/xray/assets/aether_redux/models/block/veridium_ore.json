@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "aether_redux:block/natural/veridium_ore"
+  }
+}

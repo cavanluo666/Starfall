@@ -1,0 +1,7 @@
+{
+  "parent": "block/solid_all",
+  "textures": {
+    "all": "pureores:block/black_diamond_block",
+    "particle": "pureores:block/black_diamond_block"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "gtceu:block/xray/marble"
+      },
+      {
+        "model": "gtceu:block/xray/marble",
+        "y": 180
+      },
+      {
+        "model": "gtceu:block/xray/marble_mirrored"
+      },
+      {
+        "model": "gtceu:block/xray/marble_mirrored",
+        "y": 180
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "uniquematerials:block/sandstone_black_diamond_ore"
+  }
+}

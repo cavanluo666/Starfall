@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/xray/template_path",
+  "textures": {
+    "bottom": "eternal_starlight:block/nightfall_dirt",
+    "particle": "eternal_starlight:block/nightfall_dirt",
+    "side": "eternal_starlight:block/nightfall_dirt_path_side",
+    "top": "eternal_starlight:block/nightfall_dirt_path_top"
+  }
+}

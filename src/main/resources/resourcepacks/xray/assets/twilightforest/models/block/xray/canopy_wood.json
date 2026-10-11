@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/xray/cube_column",
+  "textures": {
+    "end": "twilightforest:block/canopy_log",
+    "side": "twilightforest:block/canopy_log"
+  }
+}

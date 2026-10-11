@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "xycraft_world:block/aluminum_ore_kivi"
+  }
+}

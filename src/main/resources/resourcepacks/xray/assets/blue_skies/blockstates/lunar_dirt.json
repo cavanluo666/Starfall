@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "": [
+            { "model": "blue_skies:block/xray/lunar_dirt" },
+            { "model": "blue_skies:block/xray/lunar_dirt", "y": 90 },
+            { "model": "blue_skies:block/xray/lunar_dirt", "y": 180 },
+            { "model": "blue_skies:block/xray/lunar_dirt", "y": 270 }
+        ]
+    }
+}

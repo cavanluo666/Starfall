@@ -1,0 +1,8 @@
+{
+  "parent": "block/solid_all",
+  "textures": {
+    "all": "call_of_yucutan:block/jade_ore",
+    "particle": "call_of_yucutan:block/jade_ore"
+  },
+  "render_type": "solid"
+}

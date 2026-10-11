@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/xray/cube_column",
+  "textures": {
+    "end": "gtceu:block/rubber_log",
+    "side": "gtceu:block/rubber_log"
+  }
+}

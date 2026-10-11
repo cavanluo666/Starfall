@@ -1,0 +1,9 @@
+{
+  "parent": "aoa3:block/overlay_cube",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "overlay": "aoa3:block/yellow_gemstone_ore",
+    "particle": "#texture",
+    "texture": "aoa3:block/crystallised_rock"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "minecraft:block/xray/cherry_slab"
+    },
+    "type=double": {
+      "model": "minecraft:block/xray/cherry_planks"
+    },
+    "type=top": {
+      "model": "minecraft:block/xray/cherry_slab_top"
+    }
+  }
+}

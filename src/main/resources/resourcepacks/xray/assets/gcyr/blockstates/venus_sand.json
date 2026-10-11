@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "gcyr:block/xray/venus_sand"
+      },
+      {
+        "model": "gcyr:block/xray/venus_sand",
+        "y": 180
+      },
+      {
+        "model": "gcyr:block/xray/venus_sand_mirrored"
+      },
+      {
+        "model": "gcyr:block/xray/venus_sand_mirrored",
+        "y": 180
+      }
+    ]
+  }
+}

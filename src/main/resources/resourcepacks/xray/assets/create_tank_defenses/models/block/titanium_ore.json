@@ -1,0 +1,13 @@
+{
+  "parent": "block/solid",
+  "textures": {
+    "down": "create_tank_defenses:block/titanium_ore",
+    "up": "create_tank_defenses:block/titanium_ore",
+    "north": "create_tank_defenses:block/titanium_ore",
+    "east": "create_tank_defenses:block/titanium_ore",
+    "south": "create_tank_defenses:block/titanium_ore",
+    "west": "create_tank_defenses:block/titanium_ore",
+    "particle": "create_tank_defenses:block/titanium_ore"
+  },
+  "render_type": "solid"
+}

@@ -1,0 +1,13 @@
+{
+  "parent": "block/solid",
+  "textures": {
+    "down": "unearthed_journey:block/chert_redstone_ore",
+    "up": "unearthed_journey:block/chert_redstone_ore",
+    "north": "unearthed_journey:block/chert_redstone_ore",
+    "east": "unearthed_journey:block/chert_redstone_ore",
+    "south": "unearthed_journey:block/chert_redstone_ore",
+    "west": "unearthed_journey:block/chert_redstone_ore",
+    "particle": "unearthed_journey:block/chert_redstone_ore"
+  },
+  "render_type": "solid"
+}

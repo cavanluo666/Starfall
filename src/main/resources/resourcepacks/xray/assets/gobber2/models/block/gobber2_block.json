@@ -1,0 +1,7 @@
+{
+    "parent": "block/solid_all",
+    "textures": 
+    {
+        "all": "gobber2:block/gobber2_block"
+    }
+}

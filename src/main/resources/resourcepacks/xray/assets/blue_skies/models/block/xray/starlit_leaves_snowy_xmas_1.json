@@ -1,0 +1,7 @@
+{
+    "parent": "blue_skies:block/xray/blueskies_leaves_snowy",
+    "textures": {
+        "all": "blue_skies:block/leaves/starlit_leaves_xmas_1",
+		"snowy": "blue_skies:block/leaves/starlit_leaves_snowy_xmas_1"
+	}
+}

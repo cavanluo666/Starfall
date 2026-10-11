@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/xray/cube_bottom_top",
+  "textures": {
+    "bottom": "biomeswevegone:block/overgrown_dacite_bottom",
+    "particle": "biomeswevegone:block/overgrown_dacite_bottom",
+    "side": "biomeswevegone:block/overgrown_dacite_snow_side",
+    "top": "biomeswevegone:block/overgrown_dacite_top"
+  }
+}

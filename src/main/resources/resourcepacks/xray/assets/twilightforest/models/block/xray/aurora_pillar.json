@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:block/xray/cube_all",
+  "textures": {
+    "down": "#end",
+    "east": "#side",
+    "end": "twilightforest:block/aurora_pillar_top",
+    "north": "#side",
+    "particle": "#north",
+    "side": "twilightforest:block/aurora_pillar",
+    "south": "#side",
+    "up": "#end",
+    "west": "#side"
+  }
+}

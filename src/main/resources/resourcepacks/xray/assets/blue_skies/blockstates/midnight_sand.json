@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "": [
+            { "model": "blue_skies:block/xray/midnight_sand" },
+            { "model": "blue_skies:block/xray/midnight_sand", "y": 90 },
+            { "model": "blue_skies:block/xray/midnight_sand", "y": 180 },
+            { "model": "blue_skies:block/xray/midnight_sand", "y": 270 }
+        ]
+    }
+}

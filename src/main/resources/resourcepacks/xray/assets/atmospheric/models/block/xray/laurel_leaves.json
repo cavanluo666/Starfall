@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/xray/leaves",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "all": "atmospheric:block/laurel_leaves"
+  }
+}

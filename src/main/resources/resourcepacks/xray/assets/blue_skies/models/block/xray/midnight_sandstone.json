@@ -1,0 +1,8 @@
+{
+    "parent": "block/xray/cube_bottom_top",
+    "textures": {
+        "bottom": "blue_skies:block/stone/midnight_sandstone_bottom",
+        "top": "blue_skies:block/stone/midnight_sandstone_top",
+        "side": "blue_skies:block/stone/midnight_sandstone"
+    }
+}

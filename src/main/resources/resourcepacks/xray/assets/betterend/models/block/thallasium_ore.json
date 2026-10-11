@@ -1,0 +1,6 @@
+{
+	"parent": "block/solid_all",
+	"textures": {
+		"all": "betterend:block/thallasium_ore"
+	}
+}

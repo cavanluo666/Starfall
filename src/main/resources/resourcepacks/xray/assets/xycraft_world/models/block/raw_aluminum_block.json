@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "xycraft_world:block/raw_aluminum_block"
+  }
+}

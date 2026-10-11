@@ -1,0 +1,7 @@
+{
+  "parent": "block/solid_all",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "all": "evilcraft:block/dark_ore"
+  }
+}

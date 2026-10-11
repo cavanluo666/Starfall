@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "mossy=false": {
+		  "model": "biomesoplenty:block/xray/willow_leaves"
+		},
+		"mossy=true": {
+		  "model": "biomesoplenty:block/xray/willow_leaves_mossy"
+		}
+    }
+}

@@ -1,0 +1,23 @@
+{
+	"parent": "block/block",
+	"loader": "forge:composite",
+	"children": {
+		"base": {
+			"parent": "block/solid_all",
+			"textures": {
+				"all": "blue_skies:block/ores/everdawn_moonstone_ore"
+			},
+			"render_type": "solid"
+		},
+		"emissive": {
+			"parent": "block/solid_all",
+			"textures": {
+				"all": "blue_skies:block/ores/moonstone_ore_glow"
+			},
+			"render_type": "cutout"
+		}
+	},
+	"textures": {
+		"particle": "blue_skies:block/ores/everdawn_moonstone_ore"
+	}
+}

@@ -1,0 +1,8 @@
+{   "parent": "block/xray/template_path",
+    "textures": {
+        "particle": "regions_unexplored:block/peat_dirt",
+        "top": "minecraft:block/dirt_path_top",
+        "side": "regions_unexplored:block/peat_dirt_path_side",
+        "bottom": "regions_unexplored:block/peat_dirt"
+    }
+}

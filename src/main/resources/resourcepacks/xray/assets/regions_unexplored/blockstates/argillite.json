@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "regions_unexplored:block/xray/argillite"
+      },
+      {
+        "model": "regions_unexplored:block/xray/argillite_mirrored"
+      }
+    ]
+  }
+}

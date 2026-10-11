@@ -1,0 +1,26 @@
+{
+  "variants": {
+  "": [
+    {
+      "model": "regions_unexplored:block/xray/larch_leaves"
+    },
+    {
+      "model": "regions_unexplored:block/xray/larch_leaves"
+    },
+    {
+      "model": "regions_unexplored:block/xray/larch_leaves"
+    },
+    {
+      "model": "regions_unexplored:block/xray/larch_leaves"
+    },
+    {
+      "model": "regions_unexplored:block/xray/larch_leaves"
+    },
+    {
+      "model": "regions_unexplored:block/xray/larch_leaves"
+    },
+    {
+      "model": "regions_unexplored:block/xray/larch_leaves_cone"
+    }
+  ]}
+}

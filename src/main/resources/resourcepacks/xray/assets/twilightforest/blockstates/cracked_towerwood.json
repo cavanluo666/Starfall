@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "twilightforest:block/xray/cracked_towerwood"
+      },
+      {
+        "model": "twilightforest:block/xray/cracked_towerwood_flipped"
+      },
+      {
+        "model": "twilightforest:block/xray/cracked_towerwood_alt"
+      },
+      {
+        "model": "twilightforest:block/xray/cracked_towerwood_alt_flipped"
+      }
+    ]
+  }
+}

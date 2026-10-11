@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "caverns_and_chasms:block/soul_silver_ore"
+  }
+}

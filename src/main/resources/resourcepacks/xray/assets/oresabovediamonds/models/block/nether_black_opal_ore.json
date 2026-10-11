@@ -1,0 +1,6 @@
+{
+    "parent": "block/solid_all",
+    "textures": {
+        "all": "oresabovediamonds:block/nether_black_opal_ore"
+    }
+}

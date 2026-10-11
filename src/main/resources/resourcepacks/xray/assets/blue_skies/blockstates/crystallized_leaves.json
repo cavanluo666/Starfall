@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "snowy=false": { "model": "blue_skies:block/xray/crystallized_leaves" },
+		"snowy=true": { "model": "blue_skies:block/xray/crystallized_leaves_snowy" }
+    }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/xray/leaves",
+  "textures": {
+    "all": "gtceu:block/rubber_leaves"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/xray/cube_column",
+  "textures": {
+    "end": "tropicraft:block/papaya_log_top",
+    "side": "tropicraft:block/papaya_log"
+  }
+}

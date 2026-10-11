@@ -1,0 +1,62 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "north": true
+      },
+      "apply": {
+        "model": "biomeswevegone:block/xray/weeping_milkcap_mushroom_block"
+      }
+    },
+    {
+      "when": {
+        "east": true
+      },
+      "apply": {
+        "model": "biomeswevegone:block/xray/weeping_milkcap_mushroom_block",
+        "y": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "south": true
+      },
+      "apply": {
+        "model": "biomeswevegone:block/xray/weeping_milkcap_mushroom_block",
+        "y": 180,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "west": true
+      },
+      "apply": {
+        "model": "biomeswevegone:block/xray/weeping_milkcap_mushroom_block",
+        "y": 270,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "up": true
+      },
+      "apply": {
+        "model": "biomeswevegone:block/xray/weeping_milkcap_mushroom_block",
+        "x": 270,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "down": true
+      },
+      "apply": {
+        "model": "biomeswevegone:block/xray/weeping_milkcap_mushroom_block",
+        "x": 90,
+        "uvlock": true
+      }
+    }
+  ]
+}

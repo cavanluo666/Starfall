@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/solid_column",
+  "textures": {
+    "end": "jewelry:block/deepslate_gem_vein_end",
+    "side": "jewelry:block/deepslate_gem_vein_side"
+  }
+}

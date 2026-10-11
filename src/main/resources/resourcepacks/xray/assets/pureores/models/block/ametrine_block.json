@@ -1,0 +1,7 @@
+{
+  "parent": "block/solid_all",
+  "textures": {
+    "all": "pureores:block/ametrine_block",
+    "particle": "pureores:block/ametrine_block"
+  }
+}

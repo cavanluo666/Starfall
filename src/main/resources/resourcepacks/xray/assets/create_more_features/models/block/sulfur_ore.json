@@ -1,0 +1,13 @@
+{
+  "parent": "block/solid",
+  "textures": {
+    "down": "create_more_features:block/sulfur_ore",
+    "up": "create_more_features:block/sulfur_ore",
+    "north": "create_more_features:block/sulfur_ore",
+    "east": "create_more_features:block/sulfur_ore",
+    "south": "create_more_features:block/sulfur_ore",
+    "west": "create_more_features:block/sulfur_ore",
+    "particle": "create_more_features:block/sulfur_ore"
+  },
+  "render_type": "solid"
+}

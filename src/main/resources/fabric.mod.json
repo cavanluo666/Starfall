@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "name": "星陨 Starfall",
+  "id": "meteor-client",
+  "version": "${version}",
+  "description": "基于 Meteor 功能与 Material You 界面的 Minecraft 实用客户端。已汉化，内置 Baritone、矿石透视与 CozyUI 界面材质。",
+  "authors": [
+    "cavanluo666"
+  ],
+  "contact": {
+    "homepage": "https://246644.xyz",
+    "sources": "https://github.com/cavanluo666/Starfall",
+    "issues": "https://github.com/cavanluo666/Starfall/issues"
+  },
+  "license": "GPL-3.0-only",
+  "icon": "assets/meteor-client/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "meteordevelopment.meteorclient.MeteorClient"
+    ],
+    "preLaunch": [
+      "meteordevelopment.meteorclient.soar.SoarPreLaunch"
+    ]
+  },
+  "mixins": [
+    "meteor-client.mixins.json",
+    "meteor-client-soar.mixins.json",
+    "meteor-client-baritone.mixins.json",
+    "meteor-client-indigo.mixins.json",
+    "meteor-client-sodium.mixins.json",
+    "meteor-client-lithium.mixins.json",
+    "meteor-client-viafabricplus.mixins.json"
+  ],
+  "accessWidener": "meteor-client.accesswidener",
+  "custom": {
+    "meteor-client:devbuild": "${devbuild}",
+    "meteor-client:color": "145,61,226",
+    "meteor-client:commit": "${commit}",
+    "modmenu": {
+      "links": {
+        "modmenu.homepage": "https://246644.xyz",
+        "modmenu.sources": "https://github.com/cavanluo666/Starfall"
+      }
+    }
+  },
+  "depends": {
+    "java": ">=21",
+    "minecraft": [
+      "1.21",
+      "${minecraft_version}"
+    ],
+    "fabricloader": ">=${loader_version}"
+  },
+  "breaks": {
+    "optifabric": "*",
+    "feather": "*",
+    "origins": "*",
+    "wurst": "*",
+    "sodium": "<0.6.0-beta.2",
+    "morechathistory": "*"
+  },
+  "contributors": [
+    "Meteor Development (Meteor Client)",
+    "SoarClient",
+    "PVPUtils 功能参考"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+	"parent": "block/xray/leaves",
+	"textures": {
+		"all": "herbsandharvest:block/leaves/oak_leaves",
+		"particle": "herbsandharvest:block/leaves/oak_leaves"
+	}
+}

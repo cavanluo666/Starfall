@@ -1,0 +1,9 @@
+{   "parent": "block/xray/grass_xray",
+    "textures": {
+        "particle": "regions_unexplored:block/chalk",
+        "bottom": "regions_unexplored:block/chalk",
+        "top": "regions_unexplored:block/ru_grass_block_top",
+        "side": "regions_unexplored:block/chalk_grass_side",
+        "overlay": "regions_unexplored:block/ru_grass_block_side_overlay"
+    }
+}

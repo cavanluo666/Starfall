@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/xray/leaves",
+  "textures": {
+    "all": "eternal_starlight:block/starlight_mangrove_leaves"
+  }
+}

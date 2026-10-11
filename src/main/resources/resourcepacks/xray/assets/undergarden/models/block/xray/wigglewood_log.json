@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/xray/cube_column",
+  "textures": {
+    "end": "undergarden:block/wigglewood_log_end",
+    "side": "undergarden:block/wigglewood_log_side"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/xray/leaves",
+  "textures": {
+    "all": "biomeswevegone:block/blooming_witch_hazel_leaves"
+  }
+}

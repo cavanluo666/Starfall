@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "": [
+            { "model": "blue_skies:block/xray/turquoise_dirt" },
+            { "model": "blue_skies:block/xray/turquoise_dirt", "y": 180 }
+        ]
+    }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "stellaris:block/mars_iron_ore"
+  }
+}

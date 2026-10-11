@@ -1,0 +1,9 @@
+{
+  "parent": "aoa3:block/overlay_cube",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "overlay": "aoa3:block/deepslate_bone_fragments_ore",
+    "particle": "#texture",
+    "texture": "minecraft:block/deepslate"
+  }
+}

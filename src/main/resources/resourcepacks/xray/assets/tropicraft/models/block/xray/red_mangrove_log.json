@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/xray/cube_column",
+  "textures": {
+    "end": "tropicraft:block/red_mangrove_log_top",
+    "side": "tropicraft:block/red_mangrove_log"
+  }
+}

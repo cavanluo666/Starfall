@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "deep_aether:block/skyjade_ore"
+  }
+}

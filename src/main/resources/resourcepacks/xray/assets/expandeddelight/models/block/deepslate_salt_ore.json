@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "expandeddelight:block/deepslate_salt_ore"
+  }
+}

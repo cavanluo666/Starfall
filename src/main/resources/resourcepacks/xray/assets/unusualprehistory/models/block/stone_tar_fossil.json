@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "unusualprehistory:block/stone_tar_fossil"
+  }
+}

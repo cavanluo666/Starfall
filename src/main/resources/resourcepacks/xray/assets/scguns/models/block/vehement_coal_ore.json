@@ -1,0 +1,6 @@
+{
+  "parent": "block/solid_all",
+  "textures": {
+    "all": "scguns:block/vehement_coal_ore"
+  }
+}

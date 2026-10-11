@@ -1,0 +1,10 @@
+{   "parent": "block/xray/leaves",
+  "textures": {
+    "particle": "garnished:block/nut_leaves",
+    "bottom": "garnished:block/nut_leaves",
+    "all": "garnished:block/nut_leaves",
+    "side": "garnished:block/nut_leaves",
+    "overlay": "garnished:block/leaves/nut"
+  }
+
+}

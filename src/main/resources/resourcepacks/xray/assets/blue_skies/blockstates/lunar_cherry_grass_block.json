@@ -1,0 +1,11 @@
+{
+	"variants": {
+		"snowy=false": [
+			{ "model": "blue_skies:block/xray/lunar_cherry_grass_block" },
+			{ "model": "blue_skies:block/xray/lunar_cherry_grass_block", "y": 90 },
+			{ "model": "blue_skies:block/xray/lunar_cherry_grass_block", "y": 180 },
+			{ "model": "blue_skies:block/xray/lunar_cherry_grass_block", "y": 270 }
+		],
+		"snowy=true":  { "model": "blue_skies:block/xray/lunar_grass_block_snowed" }
+	}
+}

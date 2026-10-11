@@ -1,0 +1,8 @@
+{
+  "parent": "block/solid_all",
+  "textures": {
+    "all": "crystalcraft_unlimited_java:block/europium_ores",
+    "particle": "crystalcraft_unlimited_java:block/europium_ores"
+  },
+  "render_type": "solid"
+}

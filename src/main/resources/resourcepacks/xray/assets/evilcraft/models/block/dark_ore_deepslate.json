@@ -1,0 +1,6 @@
+{
+  "parent": "block/solid_all",
+  "textures": {
+    "all": "evilcraft:block/dark_ore_deepslate"
+  }
+}

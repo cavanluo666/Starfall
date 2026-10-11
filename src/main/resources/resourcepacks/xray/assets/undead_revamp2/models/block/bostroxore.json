@@ -1,0 +1,12 @@
+{
+  "parent": "block/solid",
+  "textures": {
+    "down": "undead_revamp2:block/bostroxstone",
+    "up": "undead_revamp2:block/bostroxstone",
+    "north": "undead_revamp2:block/bostroxstone",
+    "east": "undead_revamp2:block/bostroxstone",
+    "south": "undead_revamp2:block/bostroxstone",
+    "west": "undead_revamp2:block/bostroxstone",
+    "particle": "undead_revamp2:block/bostroxstone"
+  }
+}

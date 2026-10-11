@@ -1,0 +1,22 @@
+{
+    "ambientocclusion": false,
+    "parent": "minecraft:block/block",
+    "elements": [
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+			"shade": true,
+			"light_emission": 15,
+            "neoforge_data": {
+				"block_light": 15,
+				"sky_light": 15 },
+            "faces": {
+                "down":  { "texture": "#down" },
+                "up":    { "texture": "#up" },
+                "north": { "texture": "#north" },
+                "south": { "texture": "#south" },
+                "west":  { "texture": "#west" },
+                "east":  { "texture": "#east" }
+            }
+        }
+    ]
+}

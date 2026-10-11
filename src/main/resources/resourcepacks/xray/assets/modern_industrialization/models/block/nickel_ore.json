@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "modern_industrialization:block/nickel_ore"
+  }
+}

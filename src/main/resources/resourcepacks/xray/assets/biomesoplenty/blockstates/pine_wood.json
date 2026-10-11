@@ -1,0 +1,16 @@
+{
+    "variants": {
+        "axis=y": [
+			{ "model": "biomesoplenty:block/xray/pine_wood" },
+			{ "model": "biomesoplenty:block/xray/pine_wood_knot" }
+		],
+        "axis=z": [
+			{ "model": "biomesoplenty:block/xray/pine_wood", "x": 90  },
+			{ "model": "biomesoplenty:block/xray/pine_wood_knot", "x": 90  }
+		],
+        "axis=x": [
+			{ "model": "biomesoplenty:block/xray/pine_wood", "x": 90, "y": 90 },
+			{ "model": "biomesoplenty:block/xray/pine_wood_knot", "x": 90, "y": 90 }
+		]
+    }
+}

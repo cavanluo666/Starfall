@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "undergarden:block/shiverstone_regalium_ore"
+  }
+}

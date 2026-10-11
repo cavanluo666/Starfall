@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/solid_all",
+  "textures": {
+    "all": "super_ore_block:block/super_diamond_block"
+  }
+}

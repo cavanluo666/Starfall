@@ -1,0 +1,6 @@
+{
+  "parent": "block/solid_all",
+  "textures": {
+    "all": "scguns:block/nether_sulfur_ore"
+  }
+}

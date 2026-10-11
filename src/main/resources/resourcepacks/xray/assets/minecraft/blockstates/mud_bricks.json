@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "minecraft:block/xray/mud_bricks_north_west_mirrored"
+    }
+  }
+}

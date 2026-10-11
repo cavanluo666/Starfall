@@ -1,0 +1,7 @@
+{
+    "parent": "block/xray/cube_column",
+    "textures": {
+        "end": "biomesoplenty:block/mahogany_log",
+        "side": "biomesoplenty:block/mahogany_log"
+    }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/xray/cube_all",
+  "textures": {
+    "all": "railcraft:block/quarried_stone"
+  }
+}

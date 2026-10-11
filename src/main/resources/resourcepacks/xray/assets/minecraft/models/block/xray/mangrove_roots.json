@@ -1,0 +1,8 @@
+{
+    "parent": "block/xray/leaves",
+    "textures": {
+        "all": "block/mangrove_roots_top",
+        "particle": "#all"
+   
+        }
+}
