@@ -53,6 +53,8 @@ public class SoarHudEditor extends SimpleSoarGui {
     private int addX, addY;
 
     private float doneX, doneY, doneW, doneH = -1;
+    private float previewX, previewY, previewW, previewH = -1;
+    private boolean previewHeld;
     @SuppressWarnings("unchecked")
     private final Consumer<Void>[] actionHandlers = new Consumer[3];
     private final float[][] actionBounds = new float[3][4];
@@ -89,8 +91,17 @@ public class SoarHudEditor extends SimpleSoarGui {
         meteordevelopment.meteorclient.systems.hud.screens.HudEditorScreen.renderElements(context);
     }
 
+    /**
+     * HUD 像素坐标与 GUI 缩放坐标之间的换算比。
+     *
+     * <p>必须用 {@code getScaleFactor()}（与 HUD 系统、原版编辑器一致）。
+     * 不能用 {@code canvasScale()}（framebufferWidth/scaledWidth）—— scaledWidth
+     * 有 floor 取整，两者在有取整时不相等（例：窗口 1000px、scaleFactor=3 时
+     * 得 3.003），坐标差 0.1%，元素越大拖动框偏得越多，表现为「拖动框是歪的」。
+     */
     private static float scale() {
-        return SimpleSoarGui.canvasScale();
+        var w = net.minecraft.client.MinecraftClient.getInstance().getWindow();
+        return w == null ? 1f : (float) w.getScaleFactor();
     }
 
     // ---------------- 渲染 ----------------
@@ -104,9 +115,11 @@ public class SoarHudEditor extends SimpleSoarGui {
         Skia.save();
         Skia.setAlpha((int) (fadeIn.getValue() * 255));
 
-        Skia.drawRoundedRect(0, 0, sw, sh, 0, ColorUtils.applyAlpha(pal.getSurface(), 50));
+        // 按住"原版预览"时几乎全透明，看到的就是无遮罩的原版 HUD
+        Skia.drawRoundedRect(0, 0, sw, sh, 0,
+                ColorUtils.applyAlpha(pal.getSurface(), previewHeld ? 5 : (glassStyle() ? 30 : 50)));
 
-        Skia.drawRoundedRect(panelX, panelY, panelW, BAR_H, RADIUS, pal.getSurfaceContainerHigh());
+        drawGlassPanel(pal, panelX, panelY, panelW, BAR_H, RADIUS);
         Skia.drawText("HUD 编辑器", panelX + 16f, panelY + 11f, pal.getOnSurface(), Fonts.getMedium(17));
 
         String hint;
@@ -114,6 +127,19 @@ public class SoarHudEditor extends SimpleSoarGui {
         else if (selecting) hint = "框选中";
         else hint = "拖动移动 · 框选多选 · 单击切换显示 · 右键更多";
         Skia.drawText(hint, panelX + 118f, panelY + 13f, pal.getOnSurfaceVariant(), Fonts.getRegular(13));
+
+        // 原版预览按钮：按住显示纯 HUD（隐藏遮罩与选择框），对比原版效果
+        String pv = com.soarclient.skia.font.Icon.VISIBILITY + " 原版预览（按住）";
+        Rect pvb = Skia.getTextBounds(pv, Fonts.getMedium(13));
+        previewW = pvb.getWidth() + 22f;
+        previewX = panelX + panelW - doneW - previewW - 20f;
+        previewY = panelY + 6f;
+        previewH = BAR_H - 12f;
+        previewHeld = MouseUtils.isInside(mouseX, mouseY, previewX, previewY, previewW, previewH);
+        Skia.drawRoundedRect(previewX, previewY, previewW, previewH, 10,
+                previewHeld ? pal.getPrimary() : ColorUtils.applyAlpha(pal.getOnSurfaceVariant(), 25));
+        Skia.drawFullCenteredText(pv, previewX + previewW / 2, previewY + previewH / 2,
+                previewHeld ? pal.getOnPrimary() : pal.getOnSurfaceVariant(), Fonts.getMedium(13));
 
         String done = "完成";
         Rect db = Skia.getTextBounds(done, Fonts.getMedium(15));
@@ -136,7 +162,7 @@ public class SoarHudEditor extends SimpleSoarGui {
                     ColorUtils.applyAlpha(pal.getPrimary(), 150));
         }
 
-        if (!dragging && !selecting) {
+        if (!dragging && !selecting && !previewHeld) {
             HudElement hov = hovered(mouseX, mouseY);
             if (hov != null && !selection.contains(hov)) {
                 drawHudRect(hov.getX() - (int) PAD, hov.getY() - (int) PAD,
@@ -146,7 +172,7 @@ public class SoarHudEditor extends SimpleSoarGui {
             }
         }
 
-        for (HudElement e : selection) {
+        for (HudElement e : previewHeld ? java.util.List.<HudElement>of() : selection) {
             boolean on = e.isActive();
             Color col = on ? pal.getPrimary() : pal.getError();
             drawHudRect(e.getX() - (int) PAD, e.getY() - (int) PAD,
@@ -158,7 +184,7 @@ public class SoarHudEditor extends SimpleSoarGui {
         bottomBarVisible = !selection.isEmpty();
         if (bottomBarVisible) {
             float barY = panelY + panelH - 46f;
-            Skia.drawRoundedRect(panelX, barY, panelW, 38f, RADIUS, pal.getSurfaceContainerHigh());
+            drawGlassPanel(pal, panelX, barY, panelW, 38f, RADIUS);
 
             int activeCount = 0;
             for (HudElement e : selection) if (e.isActive()) activeCount++;
@@ -191,6 +217,35 @@ public class SoarHudEditor extends SimpleSoarGui {
         Skia.restore();
     }
 
+    /** 玻璃质感面板：半透明底 + 顶部高光线 + 细描边 + 柔和阴影（不触碰 GL 状态）。 */
+    private void drawGlassPanel(ColorPalette pal, float x, float y, float w, float h, float r) {
+        boolean glass = glassStyle();
+        Color base = glass
+                ? blend(pal.getSurfaceContainerHigh(), pal.getSurface(), 0.45f)
+                : pal.getSurfaceContainerHigh();
+        int baseAlpha = glass ? 200 : 255;
+
+        Skia.drawShadow(x, y, w, h, r);
+        Skia.drawRoundedRect(x, y, w, h, r, ColorUtils.applyAlpha(base, baseAlpha));
+        // 顶部 1px 高光（玻璃反光）
+        Skia.drawRect(x + r * 0.6f, y + 1f, w - r * 1.2f, 1f,
+                ColorUtils.applyAlpha(new Color(255, 255, 255), glass ? 70 : 30));
+        // 细描边
+        Skia.drawOutline(x, y, w, h, r, 1f,
+                ColorUtils.applyAlpha(new Color(255, 255, 255), glass ? 55 : 22));
+    }
+
+    private static Color blend(Color a, Color b, float t) {
+        int r = (int) (a.getRed() + (b.getRed() - a.getRed()) * t);
+        int g = (int) (a.getGreen() + (b.getGreen() - a.getGreen()) * t);
+        int bl = (int) (a.getBlue() + (b.getBlue() - a.getBlue()) * t);
+        return new Color(r, g, bl);
+    }
+
+    /** 编辑器视觉风格：false=Material You 实底，true=液态玻璃。写入 soar-ui.json。 */
+    private static boolean glassStyle() {
+        return com.soarclient.SoarConfig.get().isHudEditorGlass();
+    }
     private void drawHudRect(int hx, int hy, int hw, int hh, Color fill, Color outline) {
         float s = scale();
         Skia.drawRoundedRect(hx / s, hy / s, hw / s, hh / s, 8f, fill);
@@ -237,6 +292,9 @@ public class SoarHudEditor extends SimpleSoarGui {
         int hy = (int) (mouseY * s);
 
         if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
+            if (MouseUtils.isInside(mouseX, mouseY, previewX, previewY, previewW, previewH)) {
+                return; // 预览按钮按住即可，点击不产生编辑动作
+            }
             if (MouseUtils.isInside(mouseX, mouseY, doneX, doneY, doneW, doneH)) {
                 close();
                 return;

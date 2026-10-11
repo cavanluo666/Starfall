@@ -84,6 +84,10 @@ public class SettingsPage extends Page {
                 meteordevelopment.meteorclient.soar.SoarIntegration.isCozyUiEnabled(),
                 v -> meteordevelopment.meteorclient.soar.SoarIntegration.setCozyUiEnabled(v)));
 
+        appearance.add(new AppearanceBar("外观 · HUD 编辑器风格", "液态玻璃（半透明高光）或 Material You 实底",
+                Icon.LENS_BLUR, x + Layout.listPadX(), y + Layout.contentTop(), width - Layout.listPadX() * 2f,
+                SoarConfig.get().isHudEditorGlass(),
+                v -> SoarConfig.get().setHudEditorGlass(v)));
         appearance.add(new AppearanceBar("外观 · 矿石透视材质", "启用内置的 Xray Ultimate 矿石透视材质包",
                 Icon.VISIBILITY, x + Layout.listPadX(), y + Layout.contentTop(), width - Layout.listPadX() * 2f,
                 meteordevelopment.meteorclient.soar.SoarIntegration.isXrayPackEnabled(),

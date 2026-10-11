@@ -30,6 +30,8 @@ public final class SoarConfig {
     private boolean fastBlur = true;
     /** 界面上那层遮罩的不透明度（0-255）。越低毛玻璃越通透 */
     private int scrimAlpha = 70;
+    /** HUD 编辑器视觉风格：false=Material You 实底，true=液态玻璃（半透明+高光） */
+    private boolean hudEditorGlass = true;
 
     private boolean loaded;
 
@@ -95,6 +97,15 @@ public final class SoarConfig {
         save();
     }
 
+    public boolean isHudEditorGlass() {
+        return hudEditorGlass;
+    }
+
+    public void setHudEditorGlass(boolean v) {
+        this.hudEditorGlass = v;
+        save();
+    }
+
     public int getScrimAlpha() {
         return scrimAlpha;
     }
@@ -129,6 +140,7 @@ public final class SoarConfig {
             if (o.has("blurIntensity")) blurIntensity = o.get("blurIntensity").getAsInt();
             if (o.has("fastBlur")) fastBlur = o.get("fastBlur").getAsBoolean();
             if (o.has("scrimAlpha")) scrimAlpha = o.get("scrimAlpha").getAsInt();
+            if (o.has("hudEditorGlass")) hudEditorGlass = o.get("hudEditorGlass").getAsBoolean();
         } catch (Exception e) {
             MeteorClient.LOG.warn("读取 soar-ui.json 失败: {}", e.toString());
         }
@@ -145,6 +157,7 @@ public final class SoarConfig {
             o.addProperty("blurIntensity", blurIntensity);
             o.addProperty("fastBlur", fastBlur);
             o.addProperty("scrimAlpha", scrimAlpha);
+        o.addProperty("hudEditorGlass", hudEditorGlass);
             java.nio.file.Files.writeString(file().toPath(), GSON.toJson(o));
         } catch (Exception e) {
             MeteorClient.LOG.warn("写入 soar-ui.json 失败: {}", e.toString());
