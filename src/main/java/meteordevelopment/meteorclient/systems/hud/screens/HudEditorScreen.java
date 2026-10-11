@@ -345,6 +345,13 @@ public class HudEditorScreen extends WidgetScreen implements Snapper.Container {
 
     public static boolean isOpen() {
         Screen s = mc.currentScreen;
+        // SoarHudEditor 系（Material You 版编辑器）打开时同样需要 HUD 预览保持 tick/render。
+        // SimpleSoarGui 不是 Screen，其 build() 返回匿名 Screen，只能按类名识别。
+        if (s != null) {
+            String cn = s.getClass().getName();
+            if (cn.contains("SimpleSoarGui")) return true;
+        }
+
         return s instanceof HudEditorScreen || s instanceof AddHudElementScreen || s instanceof HudElementPresetsScreen || s instanceof HudElementScreen || s instanceof HudTab.HudScreen;
     }
 

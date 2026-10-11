@@ -28,6 +28,23 @@ public class CustomTextRenderer implements TextRenderer {
     private double fontScale = 1;
     private double scale = 1;
 
+    /**
+     * 图集未覆盖的字形（本工程的打包范围不含 CJK，见 Font.packRange）。
+     * 含这类字符的文本改走原版文字渲染器 —— 它经 unifont 支持中文。
+     * 否则中文会全部回退成空格，表现为「按钮边框在、文字一片空白」。
+     */
+    private boolean needsFallback(String text) {
+        if (text == null || text.isEmpty()) return false;
+
+        Font f = building ? font : fonts[0];
+
+        for (int i = 0; i < text.length(); i++) {
+            if (!f.hasChar(text.charAt(i))) return true;
+        }
+
+        return false;
+    }
+
     public CustomTextRenderer(FontFace fontFace) {
         this.fontFace = fontFace;
 
@@ -78,6 +95,11 @@ public class CustomTextRenderer implements TextRenderer {
     public double getWidth(String text, int length, boolean shadow) {
         if (text.isEmpty()) return 0;
 
+        // 含图集外字形（如中文）时委托原版渲染器，其宽度算法保持一致
+        if (needsFallback(text)) {
+            return VanillaTextRenderer.INSTANCE.getWidth(text, length, shadow);
+        }
+
         Font font = building ? this.font : fonts[0];
         return (font.getWidth(text, length) + (shadow ? 1 : 0)) * scale / 1.5;
     }
@@ -90,6 +112,17 @@ public class CustomTextRenderer implements TextRenderer {
 
     @Override
     public double render(String text, double x, double y, Color color, boolean shadow) {
+        // 含图集外字形（如中文）→ 原版渲染器。这是「HUD 编辑器里中文变空白」的修复点
+        if (needsFallback(text)) {
+            VanillaTextRenderer vr = VanillaTextRenderer.INSTANCE;
+            vr.scaleIndividually = false;
+            boolean wasBuilding = vr.isBuilding();
+            if (!wasBuilding) vr.begin(this.scale / 1.5);   // begin 内部会乘 2，对齐当前字号
+            vr.render(text, x, y, color, shadow);
+            if (!wasBuilding) vr.end();
+            return vr.getWidth(text, shadow);
+        }
+
         boolean wasBuilding = building;
         if (!wasBuilding) begin();
 

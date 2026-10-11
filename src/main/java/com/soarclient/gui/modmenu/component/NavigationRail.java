@@ -112,13 +112,13 @@ public class NavigationRail extends Component {
         return y + height - 52;
     }
 
-    /** 打开 Meteor 的 HUD 编辑器。 */
+    /** 打开 Material You 风格的 HUD 编辑器（SoarHudEditor）。 */
     private void openHudEditor() {
         try {
             var mc = net.minecraft.client.MinecraftClient.getInstance();
-            var theme = meteordevelopment.meteorclient.gui.GuiThemes.get();
-            mc.setScreen(new meteordevelopment.meteorclient.systems.hud.screens
-                    .HudEditorScreen(theme));
+            // 新编辑器与主界面同渲染栈（Skia），中文可正常显示。
+            // 原生 HudEditorScreen 的自定义字体图集不含 CJK，中文会渲染成空格。
+            mc.setScreen(new com.soarclient.gui.hud.SoarHudEditor().build());
         } catch (Throwable t) {
             meteordevelopment.meteorclient.MeteorClient.LOG.warn("打开 HUD 编辑器失败: {}", t.toString());
         }

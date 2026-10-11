@@ -205,6 +205,18 @@ public final class SoarIntegration {
             }
         }
 
+        // -Dsoar.autohud=true 时程序化打开 Meteor 原生 HUD 编辑器，
+        // 用于复现"编辑器有边框但文字不可见"的问题（绕开点击坐标不准）
+        if (auTick == 100 && Boolean.getBoolean("soar.autohud")) {
+            try {
+                var theme = meteordevelopment.meteorclient.gui.GuiThemes.get();
+                mc.setScreen(new meteordevelopment.meteorclient.systems.hud.screens.HudEditorScreen(theme));
+                MeteorClient.LOG.info("[SoarDiag] 已打开 HUD 编辑器, theme={}", theme == null ? "null" : theme.name);
+            } catch (Throwable t) {
+                MeteorClient.LOG.warn("[SoarDiag] 打开 HUD 编辑器失败: {}", t.toString());
+            }
+        }
+
         // 较晚再打一次状态，确认模块启用的包没有被后续流程重置
         if (auTick == 200) {
             logPackState();

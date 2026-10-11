@@ -103,12 +103,34 @@ public class Font {
         for (int i = 0; i < length; i++) {
             int cp = string.charAt(i);
             CharData c = charMap.get(cp);
-            if (c == null) c = charMap.get(32);
+            // 缺字形按 0 宽处理（与 render 的跳过逻辑一致），避免宽度虚增导致文字错位
+            if (c == null) continue;
 
             width += c.xAdvance;
         }
 
         return width;
+    }
+
+    /** 图集是否包含某码点的字形。 */
+    public boolean hasChar(int codePoint) {
+        return charMap.containsKey(codePoint);
+    }
+
+    /**
+     * 字体图集是否覆盖给定文本的每个字符。
+     *
+     * <p>打包范围只含 ASCII/拉丁/希腊/西里尔（见构造函数的 packRange），
+     * <b>不含 CJK</b>。缺字形的字符在 render 里会回退成空格 —— 表现为
+     * 「中文全部变成空白、只剩按钮边框」。调用方应先用本方法检查，
+     * 未覆盖的文本改走原版文字渲染器（VanillaTextRenderer，经 unifont 支持中文）。
+     */
+    public boolean supports(String string) {
+        for (int i = 0; i < string.length(); i++) {
+            if (!charMap.containsKey(string.charAt(i))) return false;
+        }
+
+        return true;
     }
 
     public int getHeight() {
@@ -121,7 +143,8 @@ public class Font {
         for (int i = 0; i < string.length(); i++) {
             int cp = string.charAt(i);
             CharData c = charMap.get(cp);
-            if (c == null) c = charMap.get(32);
+            // 保险：缺字形时跳过而不是画空格，避免把宽度算进去导致后续文字错位
+            if (c == null) continue;
 
             mesh.quad(
                 mesh.vec2(x + c.x0 * scale, y + c.y0 * scale).vec2(c.u0, c.v0).color(color).next(),
