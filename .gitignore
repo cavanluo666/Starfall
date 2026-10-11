@@ -26,3 +26,7 @@ out/
 *.tmp
 *.bak
 run/
+
+# 发行物：130 MB 的打包 jar 走 GitHub Release 附件，不入版本库
+# （源码与构建脚本都在库里，随时可重新构建）
+dist/
