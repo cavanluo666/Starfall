@@ -61,6 +61,17 @@ public class SimpleSoarGui {
     }
 
     /**
+     * Skia 覆盖层渲染前的钩子（在 renderBackground 之后、Skia 画布之前）。
+     *
+     * <p>HUD 编辑器用它在 MC 渲染栈里画元素预览 —— 这些元素由
+     * {@code HudRenderer}（MC 管线）绘制，必须在 Skia 全屏遮罩之前完成，
+     * 否则会被遮罩盖住（表现为「除顶栏外一片空白」）。
+     */
+    public void onRenderBeforeOverlay(net.minecraft.client.gui.DrawContext context,
+                                      double mouseX, double mouseY, float delta) {
+    }
+
+    /**
      * 帧缓冲像素 -> GUI 缩放坐标 的精确缩放比。
      * 用 framebuffer/scaledWidth 而非 scaleFactor，可消除 scaledWidth 取整带来的偏差。
      */
@@ -91,6 +102,10 @@ public class SimpleSoarGui {
                 // 因此必须显式触发 renderBackground —— 它负责画原版背景并完成官方模糊，
                 // 再由 ScreenGlassMixin 在末尾叠加很薄的 Material You 遮罩。
                 this.renderBackground(context, mouseX, mouseY, delta);
+
+                // 子类钩子：在 Skia 覆盖层之前渲染（如 HUD 编辑器的元素预览，
+                // 走 MC 渲染栈，必须在 Skia 画布绘制前完成，否则被遮罩盖住）。
+                SimpleSoarGui.this.onRenderBeforeOverlay(context, mouseX, mouseY, delta);
 
                 SkiaContext.ensureSurface(McCompat.framebufferWidth(), McCompat.framebufferHeight());
 

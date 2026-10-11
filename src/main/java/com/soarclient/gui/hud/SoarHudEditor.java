@@ -78,6 +78,17 @@ public class SoarHudEditor extends SimpleSoarGui {
         init();
     }
 
+    /**
+     * 在 Skia 遮罩之前把 HUD 元素画出来（MC 渲染栈）。
+     * 与原版 HudEditorScreen.renderElements 相同：编辑器打开时全部元素都画，
+     * 隐藏的元素也要画（否则看不见自己在编辑什么）。
+     */
+    @Override
+    public void onRenderBeforeOverlay(net.minecraft.client.gui.DrawContext context,
+                                      double mouseX, double mouseY, float delta) {
+        meteordevelopment.meteorclient.systems.hud.screens.HudEditorScreen.renderElements(context);
+    }
+
     private static float scale() {
         return SimpleSoarGui.canvasScale();
     }
