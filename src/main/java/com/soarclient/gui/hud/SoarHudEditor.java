@@ -94,14 +94,20 @@ public class SoarHudEditor extends SimpleSoarGui {
     /**
      * HUD 像素坐标与 GUI 缩放坐标之间的换算比。
      *
-     * <p>必须用 {@code getScaleFactor()}（与 HUD 系统、原版编辑器一致）。
-     * 不能用 {@code canvasScale()}（framebufferWidth/scaledWidth）—— scaledWidth
-     * 有 floor 取整，两者在有取整时不相等（例：窗口 1000px、scaleFactor=3 时
-     * 得 3.003），坐标差 0.1%，元素越大拖动框偏得越多，表现为「拖动框是歪的」。
+     * <p><b>必须与 Skia 画布的映射一致，即 {@link SimpleSoarGui#canvasScale()}。</b>
+     * 本编辑器里鼠标、绘制、元素框三方共用这一个比例，任何偏差都会表现为
+     * 「拖动框歪、越靠右下越偏、新建元素落到窗外」。
+     *
+     * <p>不能用 {@code getScaleFactor()}：MC 的关系是
+     * {@code scaledWidth = ceil(framebufferWidth / scaleFactor)}（反编译确认），
+     * ceil 使 framebufferWidth/scaledWidth 与 scaleFactor 不严格相等
+     * （例：fb=1000、scale=3 时 canvasScale=3.003 vs scaleFactor=3.0）。
+     * HUD 元素坐标虽由原版编辑器按 scaleFactor 写入，但元素<b>渲染</b>在
+     * framebuffer 空间，画布也在 framebuffer 空间 —— 三方统一到
+     * canvasScale 后，本编辑器内的映射自洽且与实际渲染位置吻合。
      */
     private static float scale() {
-        var w = net.minecraft.client.MinecraftClient.getInstance().getWindow();
-        return w == null ? 1f : (float) w.getScaleFactor();
+        return SimpleSoarGui.canvasScale();
     }
 
     // ---------------- 渲染 ----------------
