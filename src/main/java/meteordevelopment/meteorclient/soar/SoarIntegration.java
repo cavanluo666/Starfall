@@ -209,9 +209,8 @@ public final class SoarIntegration {
         // 用于复现"编辑器有边框但文字不可见"的问题（绕开点击坐标不准）
         if (auTick == 100 && Boolean.getBoolean("soar.autohud")) {
             try {
-                var theme = meteordevelopment.meteorclient.gui.GuiThemes.get();
-                mc.setScreen(new meteordevelopment.meteorclient.systems.hud.screens.HudEditorScreen(theme));
-                MeteorClient.LOG.info("[SoarDiag] 已打开 HUD 编辑器, theme={}", theme == null ? "null" : theme.name);
+                mc.setScreen(new com.soarclient.gui.hud.SoarHudEditor().build());
+                MeteorClient.LOG.info("[SoarDiag] 已打开 HUD 编辑器(Material You 版)");
             } catch (Throwable t) {
                 MeteorClient.LOG.warn("[SoarDiag] 打开 HUD 编辑器失败: {}", t.toString());
             }

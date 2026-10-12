@@ -246,6 +246,12 @@ public class Hud extends System<Hud> implements Iterable<HudElement> {
     }
 
     private boolean shouldHideHud() {
+        // 编辑器打开时必须始终显示 HUD，否则「编辑器里看不到可见元素」。
+        // SoarHudEditor 走简单 Skia Screen（SimpleSoarGui 的匿名 Screen），
+        // 不是 WidgetScreen，只靠 instanceof WidgetScreen 判断会漏掉它 ——
+        // 原版编辑器是 WidgetScreen 子类，所以从不踩这个坑。
+        if (HudEditorScreen.isOpen()) return false;
+
         return hideInMenus.get() && mc.currentScreen != null && !(mc.currentScreen instanceof WidgetScreen);
     }
 

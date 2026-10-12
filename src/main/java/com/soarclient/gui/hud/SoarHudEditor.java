@@ -88,7 +88,19 @@ public class SoarHudEditor extends SimpleSoarGui {
     @Override
     public void onRenderBeforeOverlay(net.minecraft.client.gui.DrawContext context,
                                       double mouseX, double mouseY, float delta) {
+        // HUD 元素坐标是帧缓冲像素，必须先切到未缩放投影（正交空间 = framebuffer 尺寸），
+        // 画完还原。原版 HudEditorScreen.render() 正是这么做的（unscaledProjection →
+        // renderElements → scaledProjection）。漏掉投影切换时元素坐标被当前 GUI 投影
+        // 再除一次 scaleFactor：整体挤向左上、多数出窗、选择框与元素错位、
+        // 原版预览透明后表现为「一片空白」。
+        meteordevelopment.meteorclient.utils.Utils.unscaledProjection();
+
+        // 复用原版渲染入口：它会按 hud.active 选择「只画隐藏元素」或「全部画」，
+        // 与 Hud.onRender（画可见元素）互补，两者合起来恰好覆盖全部元素且不重复。
+        // 真机截图已验证：投影修复后元素与选择框精确对齐。
         meteordevelopment.meteorclient.systems.hud.screens.HudEditorScreen.renderElements(context);
+
+        meteordevelopment.meteorclient.utils.Utils.scaledProjection();
     }
 
     /**
@@ -121,39 +133,71 @@ public class SoarHudEditor extends SimpleSoarGui {
         Skia.save();
         Skia.setAlpha((int) (fadeIn.getValue() * 255));
 
-        // 按住"原版预览"时几乎全透明，看到的就是无遮罩的原版 HUD
-        Skia.drawRoundedRect(0, 0, sw, sh, 0,
-                ColorUtils.applyAlpha(pal.getSurface(), previewHeld ? 5 : (glassStyle() ? 30 : 50)));
+        // 全屏遮罩：只在顶栏/底栏区域压暗，中间 HUD 元素区保持通透
+        // （元素由 MC 渲染栈画在遮罩之下，遮罩太厚会把它们盖住）
+        bottomBarVisible = !selection.isEmpty();
+        if (!previewHeld) {
+            int dim = glassStyle() ? 70 : 95;
+            float barBottom = panelY + BAR_H + 6f;
+            // 顶栏附近
+            Skia.drawRoundedRect(0, 0, sw, barBottom, 0, ColorUtils.applyAlpha(pal.getSurface(), dim));
+            // 底部（选中时才出现的操作栏区域）
+            if (bottomBarVisible) {
+                Skia.drawRoundedRect(0, panelY + panelH - 54f, sw, 54f, 0,
+                        ColorUtils.applyAlpha(pal.getSurface(), dim));
+            }
+        }
 
         drawGlassPanel(pal, panelX, panelY, panelW, BAR_H, RADIUS);
         Skia.drawText("HUD 编辑器", panelX + 16f, panelY + 11f, pal.getOnSurface(), Fonts.getMedium(17));
 
-        String hint;
-        if (dragging) hint = "拖拽中 · 靠近其它元素自动吸附";
-        else if (selecting) hint = "框选中";
-        else hint = "拖动移动 · 框选多选 · 单击切换显示 · 右键更多";
-        Skia.drawText(hint, panelX + 118f, panelY + 13f, pal.getOnSurfaceVariant(), Fonts.getRegular(13));
-
-        // 原版预览按钮：按住显示纯 HUD（隐藏遮罩与选择框），对比原版效果
-        String pv = com.soarclient.skia.font.Icon.VISIBILITY + " 原版预览（按住）";
-        Rect pvb = Skia.getTextBounds(pv, Fonts.getMedium(13));
-        previewW = pvb.getWidth() + 22f;
-        previewX = panelX + panelW - doneW - previewW - 20f;
-        previewY = panelY + 6f;
-        previewH = BAR_H - 12f;
-        previewHeld = MouseUtils.isInside(mouseX, mouseY, previewX, previewY, previewW, previewH);
-        Skia.drawRoundedRect(previewX, previewY, previewW, previewH, 10,
-                previewHeld ? pal.getPrimary() : ColorUtils.applyAlpha(pal.getOnSurfaceVariant(), 25));
-        Skia.drawFullCenteredText(pv, previewX + previewW / 2, previewY + previewH / 2,
-                previewHeld ? pal.getOnPrimary() : pal.getOnSurfaceVariant(), Fonts.getMedium(13));
-
+        // ---- 先算齐所有几何，再绘制 ----
+        // 注意顺序：previewX 依赖 doneW，必须先算"完成"的尺寸，
+        // 否则首帧 doneW 仍是初始值 -1，预览按钮会算到面板外。
         String done = "完成";
         Rect db = Skia.getTextBounds(done, Fonts.getMedium(15));
         doneW = db.getWidth() + 28f;
         doneX = panelX + panelW - doneW - 8f;
         doneY = panelY + 4f;
         doneH = BAR_H - 8f;
+
+        String pv = com.soarclient.skia.font.Icon.VISIBILITY + " 原版预览（按住）";
+        Rect pvb = Skia.getTextBounds(pv, Fonts.getMedium(13));
+        previewW = pvb.getWidth() + 22f;
+        previewX = doneX - previewW - 8f;
+        previewY = panelY + 6f;
+        previewH = BAR_H - 12f;
+
         boolean hoverDone = MouseUtils.isInside(mouseX, mouseY, doneX, doneY, doneW, doneH);
+        previewHeld = MouseUtils.isInside(mouseX, mouseY, previewX, previewY, previewW, previewH);
+
+        // 提示文字：可用宽度到预览按钮为止，超长截断
+        String hint;
+        if (dragging) hint = "拖拽中 · 自动吸附";
+        else if (selecting) hint = "框选中";
+        else hint = "拖动 · 框选 · 单击切换 · 右键更多";
+
+        float hintX = panelX + 118f;
+        float hintMaxW = previewX - hintX - 10f;
+        String hintText = hint;
+        if (hintMaxW > 30f && Skia.getTextBounds(hint, Fonts.getRegular(13)).getWidth() > hintMaxW) {
+            while (hintText.length() > 2
+                    && Skia.getTextBounds(hintText + "…", Fonts.getRegular(13)).getWidth() > hintMaxW) {
+                hintText = hintText.substring(0, hintText.length() - 1);
+            }
+            hintText = hintText + "…";
+        } else if (hintMaxW <= 30f) {
+            hintText = "";
+        }
+
+        Skia.drawText(hintText, hintX, panelY + 13f, pal.getOnSurfaceVariant(), Fonts.getRegular(13));
+
+        // ---- 绘制按钮（在工具条底色之上）----
+        Skia.drawRoundedRect(previewX, previewY, previewW, previewH, 10,
+                previewHeld ? pal.getPrimary() : ColorUtils.applyAlpha(pal.getOnSurfaceVariant(), 30));
+        Skia.drawFullCenteredText(pv, previewX + previewW / 2, previewY + previewH / 2,
+                previewHeld ? pal.getOnPrimary() : pal.getOnSurfaceVariant(), Fonts.getMedium(13));
+
         Skia.drawRoundedRect(doneX, doneY, doneW, doneH, 12,
                 hoverDone ? pal.getPrimary() : ColorUtils.applyAlpha(pal.getPrimary(), 160));
         Skia.drawFullCenteredText(done, doneX + doneW / 2, doneY + doneH / 2, pal.getOnPrimary(), Fonts.getMedium(15));
@@ -187,7 +231,6 @@ public class SoarHudEditor extends SimpleSoarGui {
                     ColorUtils.applyAlpha(col, on ? 170 : 220));
         }
 
-        bottomBarVisible = !selection.isEmpty();
         if (bottomBarVisible) {
             float barY = panelY + panelH - 46f;
             drawGlassPanel(pal, panelX, barY, panelW, 38f, RADIUS);
