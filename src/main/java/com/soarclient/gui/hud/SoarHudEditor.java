@@ -55,6 +55,9 @@ public class SoarHudEditor extends SimpleSoarGui {
     private float doneX, doneY, doneW, doneH = -1;
     private float previewX, previewY, previewW, previewH = -1;
     private boolean previewHeld;
+    /** HUD 总开关按钮命中区 */
+    private float toggleX, toggleY, toggleW, toggleH = -1;
+    private boolean toggleHovered;
     @SuppressWarnings("unchecked")
     private final Consumer<Void>[] actionHandlers = new Consumer[3];
     private final float[][] actionBounds = new float[3][4];
@@ -73,6 +76,16 @@ public class SoarHudEditor extends SimpleSoarGui {
         panelW = McCompat.scaledWidth() - Layout.MARGIN_X * 2;
         panelH = McCompat.scaledHeight() - Layout.MARGIN_Y * 2;
         fadeIn.onTick(1, 10);
+
+        // 打开编辑器即自动开启 HUD 总开关。
+        // 总开关（Hud.active）默认关闭，它才是游戏内是否渲染 HUD 的最终条件
+        // （Hud.onRender 第一行 `if (!active) return`）。用户来编辑 HUD，
+        // 本意就是要它显示，若仍关着会表现为「编辑完游戏里什么都没有」。
+        // 这个开关原本只在 Meteor 原生 HUD 标签页里，那个界面中文显示不全，很难找到。
+        if (!hud.active) {
+            hud.active = true;
+            hud.save();
+        }
     }
 
     @Override
@@ -190,9 +203,24 @@ public class SoarHudEditor extends SimpleSoarGui {
             hintText = "";
         }
 
+        // ---- HUD 总开关按钮几何（决定游戏内是否渲染 HUD）----
+        String tgText = "HUD " + (hud.active ? "显示中" : "已关闭");
+        Rect tgb = Skia.getTextBounds(tgText, Fonts.getMedium(13));
+        toggleW = tgb.getWidth() + 22f;
+        toggleX = panelX + 16f + Skia.getTextBounds("HUD 编辑器", Fonts.getMedium(17)).getWidth() + 14f;
+        toggleY = panelY + 6f;
+        toggleH = BAR_H - 12f;
+        toggleHovered = MouseUtils.isInside(mouseX, mouseY, toggleX, toggleY, toggleW, toggleH);
+
         Skia.drawText(hintText, hintX, panelY + 13f, pal.getOnSurfaceVariant(), Fonts.getRegular(13));
 
         // ---- 绘制按钮（在工具条底色之上）----
+        Skia.drawRoundedRect(toggleX, toggleY, toggleW, toggleH, 10,
+                hud.active ? ColorUtils.applyAlpha(pal.getPrimary(), toggleHovered ? 230 : 180)
+                           : ColorUtils.applyAlpha(pal.getOnSurfaceVariant(), toggleHovered ? 45 : 30));
+        Skia.drawFullCenteredText(tgText, toggleX + toggleW / 2, toggleY + toggleH / 2,
+                hud.active ? pal.getOnPrimary() : pal.getOnSurfaceVariant(), Fonts.getMedium(13));
+
         Skia.drawRoundedRect(previewX, previewY, previewW, previewH, 10,
                 previewHeld ? pal.getPrimary() : ColorUtils.applyAlpha(pal.getOnSurfaceVariant(), 30));
         Skia.drawFullCenteredText(pv, previewX + previewW / 2, previewY + previewH / 2,
@@ -229,6 +257,19 @@ public class SoarHudEditor extends SimpleSoarGui {
                     e.getWidth() + (int) PAD * 2, e.getHeight() + (int) PAD * 2,
                     ColorUtils.applyAlpha(col, on ? 20 : 36),
                     ColorUtils.applyAlpha(col, on ? 170 : 220));
+
+            // 隐藏元素加明确角标：仅靠红框区分不够，用户会不知道自己把它关了
+            if (!on) {
+                float sBadge = scale();
+                float bxB = (e.getX() - (int) PAD) / sBadge;
+                float byB = (e.getY() - (int) PAD) / sBadge;
+                String badgeText = "已隐藏";
+                Rect bbB = Skia.getTextBounds(badgeText, Fonts.getMedium(12));
+                float bwB = bbB.getWidth() + 14f;
+                Skia.drawRoundedRect(bxB, byB - 18f, bwB, 16f, 8, pal.getError());
+                Skia.drawFullCenteredText(badgeText, bxB + bwB / 2, byB - 10f,
+                        pal.getOnError(), Fonts.getMedium(12));
+            }
         }
 
         if (bottomBarVisible) {
@@ -341,6 +382,12 @@ public class SoarHudEditor extends SimpleSoarGui {
         int hy = (int) (mouseY * s);
 
         if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
+            if (MouseUtils.isInside(mouseX, mouseY, toggleX, toggleY, toggleW, toggleH)) {
+                hud.active = !hud.active;
+                hud.save();
+                meteordevelopment.meteorclient.MeteorClient.LOG.info("[HUD] 总开关 -> {}", hud.active);
+                return;
+            }
             if (MouseUtils.isInside(mouseX, mouseY, previewX, previewY, previewW, previewH)) {
                 return; // 预览按钮按住即可，点击不产生编辑动作
             }
