@@ -92,7 +92,11 @@ public class SoarHudElementScreen extends SimpleSoarGui {
         Skia.drawText(title, panelX + pad, y, pal.getOnSurface(), Fonts.getMedium(19));
         y += 26f;
 
-        String desc = element.info.description == null ? "" : element.info.description;
+        // 描述也要过汉化表 —— 之前这里直接用了 info.description 原值，
+        // 导致元素介绍在设置页里仍是英文（标题走了 I18n、描述漏了）。
+        String rawDesc = element.info.description == null ? "" : element.info.description;
+        String desc = com.soarclient.utils.language.I18n.has(rawDesc)
+                ? com.soarclient.utils.language.I18n.get(rawDesc) : rawDesc;
         if (!desc.isEmpty()) {
             Skia.drawText(desc, panelX + pad, y, pal.getOnSurfaceVariant(), Fonts.getRegular(13));
         }

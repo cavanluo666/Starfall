@@ -61,7 +61,8 @@ public class HudElementInfo<T extends HudElement> {
 
         public Preset(HudElementInfo<?> info, String title, Consumer<T> callback) {
             this.info = info;
-            this.title = title;
+            // 预设标题同样在界面上显示，需与 title/description 一样过汉化表
+            this.title = meteordevelopment.meteorclient.soar.SoarI18n.t(title);
             this.callback = callback;
         }
     }
