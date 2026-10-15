@@ -104,10 +104,78 @@ public class HudRenderer {
         Renderer2D.COLOR.line(x1, y1, x2, y2, color);
     }
 
+    /**
+     * 元素背景填充（自动套用全局圆角）。
+     *
+     * <p>圆角半径取自 {@code Hud.cornerRadius}（设置里可调，0 = 直角）。
+     * 元素有 19+ 个、背景调用几十处，逐个改不现实 —— 在这里统一介入：
+     * 元素只要用本方法画背景就自动获得圆角。
+     */
     public void quad(double x, double y, double width, double height, Color color) {
+        double r = hud.cornerRadius.get();
+        // 细条（如 ActiveModulesHud 用 quad 拼的 1~2px 边框）不套圆角：
+        // 半径超过短边一半时形状退化，且会把边框切成碎片。
+        double minSide = Math.min(width, height);
+        if (r > 0.5 && minSide >= r * 2.0 + 1.0) {
+            roundedQuad(x, y, width, height, r, color);
+        } else {
+            rawQuad(x, y, width, height, color);
+        }
+    }
+
+    /** 直通绘制，不做圆角；供 roundedQuad 内部使用，避免递归。 */
+    private void rawQuad(double x, double y, double width, double height, Color color) {
         Renderer2D.COLOR.quad(x, y, width, height, color);
     }
 
+    /**
+     * 圆角矩形填充。
+     *
+     * <p>底层只有三角形原语（{@code Renderer2D} 无圆角支持），这里用
+     * 「中间十字 + 四角扇形」剖分近似：中央整列 + 左右中段覆盖非圆角区，
+     * 四个角按角度区间细分扇形。屏幕坐标系 y 轴向下，故角度 0=右、90=下、
+     * 180=左、270=上。
+     *
+     * <p>半径自动收敛到不超过半宽/半高，避免形状自交；
+     * 半径 &lt;= 0.5 或尺寸非法时退化为普通 quad，保持与旧行为一致。
+     */
+    public void roundedQuad(double x, double y, double width, double height, double radius, Color color) {
+        if (width <= 0 || height <= 0) return;
+
+        double r = Math.min(radius, Math.min(width, height) / 2.0);
+        if (r <= 0.5) {
+            rawQuad(x, y, width, height, color);
+            return;
+        }
+
+        // 中间十字：中央整列（含上下边的中段）+ 左右两侧中段
+        rawQuad(x + r, y, width - r * 2, height, color);
+        rawQuad(x, y + r, r, height - r * 2, color);
+        rawQuad(x + width - r, y + r, r, height - r * 2, color);
+
+        // 四角扇形
+        int seg = Math.max(3, Math.min(8, (int) Math.ceil(r)));
+        cornerFan(x + r, y + r, r, 180, 270, seg, color);                    // 左上
+        cornerFan(x + width - r, y + r, r, 270, 360, seg, color);            // 右上
+        cornerFan(x + width - r, y + height - r, r, 0, 90, seg, color);      // 右下
+        cornerFan(x + r, y + height - r, r, 90, 180, seg, color);            // 左下
+    }
+
+    /** 圆角扇形（以 cx,cy 为圆心，角度区间 [startDeg,endDeg] 内的三角扇）。 */
+    private void cornerFan(double cx, double cy, double r, double startDeg, double endDeg,
+                           int seg, Color color) {
+        double a0 = Math.toRadians(startDeg);
+        double a1 = Math.toRadians(endDeg);
+        for (int i = 0; i < seg; i++) {
+            double t0 = a0 + (a1 - a0) * i / seg;
+            double t1 = a0 + (a1 - a0) * (i + 1) / seg;
+            Renderer2D.COLOR.triangle(
+                    cx, cy,
+                    cx + Math.cos(t0) * r, cy + Math.sin(t0) * r,
+                    cx + Math.cos(t1) * r, cy + Math.sin(t1) * r,
+                    color);
+        }
+    }
     public void quad(double x, double y, double width, double height, Color cTopLeft, Color cTopRight, Color cBottomRight, Color cBottomLeft) {
         Renderer2D.COLOR.quad(x, y, width, height, cTopLeft, cTopRight, cBottomRight, cBottomLeft);
     }

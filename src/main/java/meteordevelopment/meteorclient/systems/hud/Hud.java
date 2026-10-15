@@ -77,6 +77,16 @@ public class Hud extends System<Hud> implements Iterable<HudElement> {
 
     // Editor
 
+    /** 全部 HUD 元素的圆角半径（0 = 直角）。元素背景统一由此取用。 */
+    public final Setting<Integer> cornerRadius = sgEditor.add(new IntSetting.Builder()
+        .name("corner-radius")
+        .description("Rounded corner radius for HUD elements.")
+        .defaultValue(6)
+        .min(0)
+        .sliderMax(24)
+        .build()
+    );
+
     public final Setting<Integer> border = sgEditor.add(new IntSetting.Builder()
         .name("border")
         .description("Space around the edges of the screen.")

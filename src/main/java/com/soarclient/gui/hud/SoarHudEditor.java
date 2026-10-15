@@ -94,6 +94,15 @@ public class SoarHudEditor extends SimpleSoarGui {
     }
 
     /**
+     * 编辑器里不做全屏模糊：主体是游戏画面上的元素预览，
+     * renderBackground 会把元素一起糊掉（「元素被模糊挡住」的根因）。
+     */
+    @Override
+    public boolean wantBackgroundInWorld() {
+        return false;
+    }
+
+    /**
      * 在 Skia 遮罩之前把 HUD 元素画出来（MC 渲染栈）。
      * 与原版 HudEditorScreen.renderElements 相同：编辑器打开时全部元素都画，
      * 隐藏的元素也要画（否则看不见自己在编辑什么）。
@@ -162,59 +171,67 @@ public class SoarHudEditor extends SimpleSoarGui {
         }
 
         drawGlassPanel(pal, panelX, panelY, panelW, BAR_H, RADIUS);
-        Skia.drawText("HUD 编辑器", panelX + 16f, panelY + 11f, pal.getOnSurface(), Fonts.getMedium(17));
 
-        // ---- 先算齐所有几何，再绘制 ----
-        // 注意顺序：previewX 依赖 doneW，必须先算"完成"的尺寸，
-        // 否则首帧 doneW 仍是初始值 -1，预览按钮会算到面板外。
+        // ---- 顶栏元素从左到右依次排布：标题 | 总开关 | 提示 | 原版预览 | 完成 ----
+        // 每项左缘由前一项右缘推导，避免各自硬编码 X 导致随文字长度重叠。
+        float barLeft = panelX + 16f;
+        float barRight = panelX + panelW - 8f;
+        float itemY = panelY + 6f;
+        float itemH = BAR_H - 12f;
+
+        // 1) 完成（最右，先定位以便推出其余元素的可用宽度）
         String done = "完成";
         Rect db = Skia.getTextBounds(done, Fonts.getMedium(15));
         doneW = db.getWidth() + 28f;
-        doneX = panelX + panelW - doneW - 8f;
-        doneY = panelY + 4f;
         doneH = BAR_H - 8f;
-
-        String pv = com.soarclient.skia.font.Icon.VISIBILITY + " 原版预览（按住）";
-        Rect pvb = Skia.getTextBounds(pv, Fonts.getMedium(13));
-        previewW = pvb.getWidth() + 22f;
-        previewX = doneX - previewW - 8f;
-        previewY = panelY + 6f;
-        previewH = BAR_H - 12f;
-
+        doneX = barRight - doneW;
+        doneY = panelY + 4f;
         boolean hoverDone = MouseUtils.isInside(mouseX, mouseY, doneX, doneY, doneW, doneH);
+
+        // 2) 原版预览（贴完成左侧）
+        String pv = com.soarclient.skia.font.Icon.VISIBILITY + " 原版预览";
+        Rect pvb = Skia.getTextBounds(pv, Fonts.getMedium(13));
+        previewW = pvb.getWidth() + 20f;
+        previewH = itemH;
+        previewY = itemY;
+        previewX = doneX - previewW - 6f;
         previewHeld = MouseUtils.isInside(mouseX, mouseY, previewX, previewY, previewW, previewH);
 
-        // 提示文字：可用宽度到预览按钮为止，超长截断
+        // 3) HUD 总开关（贴标题右侧；标题宽度已知）
+        float titleW = Skia.getTextBounds("HUD 编辑器", Fonts.getMedium(17)).getWidth();
+        String tgText = "HUD " + (hud.active ? "显示中" : "已关闭");
+        Rect tgb = Skia.getTextBounds(tgText, Fonts.getMedium(13));
+        toggleW = tgb.getWidth() + 22f;
+        toggleX = barLeft + titleW + 14f;
+        toggleY = itemY;
+        toggleH = itemH;
+        toggleHovered = MouseUtils.isInside(mouseX, mouseY, toggleX, toggleY, toggleW, toggleH);
+
+        // 4) 提示文字：从总开关右缘起，到预览按钮左缘止，超长截断
         String hint;
         if (dragging) hint = "拖拽中 · 自动吸附";
         else if (selecting) hint = "框选中";
         else hint = "拖动 · 框选 · 单击切换 · 右键更多";
 
-        float hintX = panelX + 118f;
+        float hintX = toggleX + toggleW + 12f;
         float hintMaxW = previewX - hintX - 10f;
         String hintText = hint;
-        if (hintMaxW > 30f && Skia.getTextBounds(hint, Fonts.getRegular(13)).getWidth() > hintMaxW) {
+        if (hintMaxW > 40f && Skia.getTextBounds(hint, Fonts.getRegular(13)).getWidth() > hintMaxW) {
             while (hintText.length() > 2
                     && Skia.getTextBounds(hintText + "…", Fonts.getRegular(13)).getWidth() > hintMaxW) {
                 hintText = hintText.substring(0, hintText.length() - 1);
             }
             hintText = hintText + "…";
-        } else if (hintMaxW <= 30f) {
+        } else if (hintMaxW <= 40f) {
             hintText = "";
         }
 
-        // ---- HUD 总开关按钮几何（决定游戏内是否渲染 HUD）----
-        String tgText = "HUD " + (hud.active ? "显示中" : "已关闭");
-        Rect tgb = Skia.getTextBounds(tgText, Fonts.getMedium(13));
-        toggleW = tgb.getWidth() + 22f;
-        toggleX = panelX + 16f + Skia.getTextBounds("HUD 编辑器", Fonts.getMedium(17)).getWidth() + 14f;
-        toggleY = panelY + 6f;
-        toggleH = BAR_H - 12f;
-        toggleHovered = MouseUtils.isInside(mouseX, mouseY, toggleX, toggleY, toggleW, toggleH);
+        // ---- 绘制（顺序：文字在底，按钮压在上面）----
+        Skia.drawText("HUD 编辑器", barLeft, panelY + 11f, pal.getOnSurface(), Fonts.getMedium(17));
+        if (!hintText.isEmpty()) {
+            Skia.drawText(hintText, hintX, panelY + 13f, pal.getOnSurfaceVariant(), Fonts.getRegular(13));
+        }
 
-        Skia.drawText(hintText, hintX, panelY + 13f, pal.getOnSurfaceVariant(), Fonts.getRegular(13));
-
-        // ---- 绘制按钮（在工具条底色之上）----
         Skia.drawRoundedRect(toggleX, toggleY, toggleW, toggleH, 10,
                 hud.active ? ColorUtils.applyAlpha(pal.getPrimary(), toggleHovered ? 230 : 180)
                            : ColorUtils.applyAlpha(pal.getOnSurfaceVariant(), toggleHovered ? 45 : 30));

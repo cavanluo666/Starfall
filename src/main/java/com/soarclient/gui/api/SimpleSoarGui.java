@@ -56,6 +56,17 @@ public class SimpleSoarGui {
     public void keyPressed(int keyCode, int scanCode, int modifiers) {
     }
 
+    /**
+     * 在游戏世界内是否仍要调用 {@code renderBackground}（会做全屏模糊）。
+     *
+     * <p>默认 true：主界面（Material You 面板）在世界内也需要背景模糊。
+     * HUD 编辑器覆写为 false —— 它的主体是<b>游戏画面上的元素预览</b>，
+     * 全屏模糊会把元素一并糊掉（表现为「元素被模糊挡住」）。
+     */
+    public boolean wantBackgroundInWorld() {
+        return true;
+    }
+
     /** 渲染面尺寸变化时由外部调用，用于重新布局。 */
     public void onResize() {
     }
@@ -98,10 +109,15 @@ public class SimpleSoarGui {
 
                 if (!McCompat.windowReady()) return;
 
-                // 本类覆写了 render 且不调用 super.render()，
-                // 因此必须显式触发 renderBackground —— 它负责画原版背景并完成官方模糊，
-                // 再由 ScreenGlassMixin 在末尾叠加很薄的 Material You 遮罩。
-                this.renderBackground(context, mouseX, mouseY, delta);
+                // 背景处理：
+                //   在游戏世界内（canUpdate）时<b>不调用 renderBackground</b> ——
+                //   它会对整个帧缓冲做全屏模糊，把 HUD 元素也一起糊掉
+                //   （HudEditorScreen 同样是 `if (!Utils.canUpdate()) renderBackground(...)`）。
+                //   只有在主菜单等非世界场景才需要它画原版背景。
+                if (!meteordevelopment.meteorclient.utils.Utils.canUpdate()
+                        || SimpleSoarGui.this.wantBackgroundInWorld()) {
+                    this.renderBackground(context, mouseX, mouseY, delta);
+                }
 
                 // 子类钩子：在 Skia 覆盖层之前渲染（如 HUD 编辑器的元素预览，
                 // 走 MC 渲染栈，必须在 Skia 画布绘制前完成，否则被遮罩盖住）。
